@@ -5,8 +5,8 @@ Donate link:  http://webfadds.com/overview/plugins/
 Tags: widget, sidebar, posts, links, pages, rss, widgets
 Requires at least: 2.5
 Tested up to: 2.5.1
-Version: 1.2
-Stable tag: 1.2
+Version: 1.6
+Stable tag: 1.6
 
 MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
 
@@ -54,6 +54,10 @@ Tribulant Software (http://www.tribulant.com) offers a vast range of PHP, MySQL,
 
 Version 1.1 released May 1, 2008
 Version 1.2 released May 5, 2008
+Version 1.3 released May 12, 2008
+Version 1.4 released May 18, 2008
+Version 1.5 released May 26, 2008
+Version 1.6 released June 14, 2008
 
 
 == WordPress Security Note ==

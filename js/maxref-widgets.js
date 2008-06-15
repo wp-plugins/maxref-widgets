@@ -7,9 +7,6 @@ function change_display(display, number) {
 
 	if (display.match(/pages|categories\-\d+/)) {
 		thediv.style.display = "block";
-	}
-	
-	if (display.match(/categories\-\d+/)) {
 		leveldiv.style.display = "block";
 	}
 }

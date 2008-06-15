@@ -2,13 +2,13 @@
 
 class mrefWidgetsPlugin {
 
-	var $version = '1.5';
+	var $version = '1.6';
 
 	var $plugin_name = '';
 	
 	var $plugin_base = '';
 	
-	var $debugging = true;
+	var $debugging = false;
 	
 	var $pre = 'mref';
 	
@@ -43,6 +43,37 @@ class mrefWidgetsPlugin {
 	function url() {
 		$url = get_bloginfo('wpurl') . substr($this -> plugin_base, strlen(realpath(ABSPATH)));
 		return $url;
+	}
+	
+	function get_pages($args = array()) {
+		global $wpdb, $items, $levels;
+		
+		if (!empty($args)) {
+			if (!empty($levels) || $levels != 0) {
+				$levels--;
+				
+				extract($args, EXTR_SKIP);
+				
+				$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
+				$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
+				$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
+				$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
+				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
+				
+				if ($pages = $wpdb -> get_results($page_query)) {
+					foreach ($pages as $page) {
+						$this -> get_pages(array('post_parent' => $page -> ID));
+						
+						$items[] = array(
+							'title'			=>	$page -> post_title,
+							'href'			=>	get_permalink($page -> ID),
+						);
+					}
+				}
+			}
+		}
+		
+		return $items;
 	}
 	
 	function get_categories($args = array()) {

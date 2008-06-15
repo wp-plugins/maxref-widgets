@@ -6,7 +6,7 @@ Plugin URI: http://webfadds.com
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.5
+Version: 1.6
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -101,13 +101,16 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				global $wpdb;
 				
 				$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
-				$page_query .= (empty($child_of) || $child_of == "all") ? '' : " WHERE `post_parent` = '" . $child_of . "'";
+				$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
 				$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
 				$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
 				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
 				
 				if ($pages = $wpdb -> get_results($page_query)) {
+					global $items, $levels;
+				
 					$items = array();
+					$levels = $options[$number]['levels'];
 					
 					foreach ($pages as $page) {
 						$items[] = array(
@@ -115,6 +118,15 @@ class mrefWidgets extends mrefWidgetsPlugin {
 							'href'			=>	get_permalink($page -> ID),
 							'date'			=>	$page -> post_date,
 						);
+						
+						$childargs = array(
+							'child_of'			=>	$page -> ID,
+							'order'				=>	$order,
+							'orderby'			=>	$orderby,
+							'exclude'			=>	$exclude,
+						);
+												
+						$this -> get_pages($childargs);
 					}
 				}
 			}
@@ -404,7 +416,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			</label>
 		</p>
 		
-		<div id="levels_div<?= $number; ?>" style="display:<?= (!empty($recent) && ereg("categories", $recent)) ? 'block' : 'none'; ?>;">
+		<div id="levels_div<?= $number; ?>" style="display:<?= (!empty($recent) && (ereg("categories", $recent) || ereg("pages", $recent))) ? 'block' : 'none'; ?>;">
 			<p>
 				<?php _e('Children Levels', $this -> plugin_name); ?> 
 				<input type="text" name="mref-widget[<?= $number; ?>][levels]" value="<?= $levels; ?>" style="width:25px;" />
