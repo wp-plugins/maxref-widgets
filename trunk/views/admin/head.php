@@ -1,0 +1,1 @@
+<script type="text/javascript" src="<?= $this -> url(); ?>/js/<?= $this -> plugin_name; ?>.js"></script>
