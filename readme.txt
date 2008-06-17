@@ -30,7 +30,8 @@ Frequently asked questions coming soon...
 
 == Screenshots ==
 
-Screenshots coming soon...
+1. MaxRef Widget displays page parent and child group on sidebars
+2. MaxRef Widget child group with title link on sidebars
 
 == License ==
 
