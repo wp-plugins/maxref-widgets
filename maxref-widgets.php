@@ -6,7 +6,7 @@ Plugin URI: http://webfadds.com
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.6
+Version: 1.7
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -107,10 +107,11 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
 				
 				if ($pages = $wpdb -> get_results($page_query)) {
-					global $items, $levels;
+					global $items, $levels, $usedpages;
 				
 					$items = array();
 					$levels = $options[$number]['levels'];
+					$usedpages = array();
 					
 					foreach ($pages as $page) {
 						$items[] = array(
@@ -125,7 +126,8 @@ class mrefWidgets extends mrefWidgetsPlugin {
 							'orderby'			=>	$orderby,
 							'exclude'			=>	$exclude,
 						);
-												
+						
+						$usedpages[] = $page -> ID;					
 						$this -> get_pages($childargs);
 					}
 				}

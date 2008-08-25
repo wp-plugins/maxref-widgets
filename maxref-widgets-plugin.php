@@ -2,14 +2,10 @@
 
 class mrefWidgetsPlugin {
 
-	var $version = '1.6';
-
+	var $version = '1.7';
 	var $plugin_name = '';
-	
 	var $plugin_base = '';
-	
-	var $debugging = false;
-	
+	var $debugging = false;	
 	var $pre = 'mref';
 	
 	function mrefWidgetsPlugin() {
@@ -46,28 +42,32 @@ class mrefWidgetsPlugin {
 	}
 	
 	function get_pages($args = array()) {
-		global $wpdb, $items, $levels;
+		global $wpdb, $items, $levels, $usedpages;
 		
 		if (!empty($args)) {
 			if (!empty($levels) || $levels != 0) {
-				$levels--;
-				
-				extract($args, EXTR_SKIP);
-				
-				$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
-				$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
-				$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
-				$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
-				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
-				
-				if ($pages = $wpdb -> get_results($page_query)) {
-					foreach ($pages as $page) {
-						$this -> get_pages(array('post_parent' => $page -> ID));
-						
-						$items[] = array(
-							'title'			=>	$page -> post_title,
-							'href'			=>	get_permalink($page -> ID),
-						);
+				if (empty($usedpages) || (!empty($usedpages) && !in_array($args['child_of'], $usedpages))) {
+					$levels--;
+					$usedpages[] = $args['child_of'];
+					
+					extract($args, EXTR_SKIP);
+					
+					$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
+					$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
+					$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
+					$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
+					$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
+					
+					if ($pages = $wpdb -> get_results($page_query)) {
+						foreach ($pages as $page) {
+							$usedpages[] = $page -> ID;
+							$this -> get_pages(array('child_of' => $page -> ID));
+							
+							$items[] = array(
+								'title'			=>	$page -> post_title,
+								'href'			=>	get_permalink($page -> ID),
+							);
+						}
 					}
 				}
 			}

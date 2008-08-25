@@ -4,9 +4,9 @@ Contributors: Scott Frangos, Antonie Potgieter
 Donate link:  http://webfadds.com/overview/plugins/
 Tags: widget, sidebar, posts, links, pages, rss, widgets
 Requires at least: 2.5
-Tested up to: 2.5.1
-Version: 1.6
-Stable tag: 1.6
+Tested up to: 2.6.1
+Version: 1.7
+Stable tag: 1.7
 
 MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
 
@@ -59,6 +59,7 @@ Version 1.3 released May 12, 2008
 Version 1.4 released May 18, 2008
 Version 1.5 released May 26, 2008
 Version 1.6 released June 14, 2008
+Version 1.7 released August 2
 
 
 == WordPress Security Note ==
