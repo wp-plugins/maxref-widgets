@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Maxref Widgets
-Plugin URI: http://webfadds.com
+Plugin URI: http://maxref.tribulant.net
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
