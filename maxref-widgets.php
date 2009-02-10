@@ -6,7 +6,7 @@ Plugin URI: http://webfadds.com
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.7
+Version: 1.8
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -16,7 +16,8 @@ class mrefWidgets extends mrefWidgetsPlugin {
 	var $name = 'maxref-widgets';
 	
 	function mrefWidgets() {
-		$this -> register_plugin($this -> name, __FILE__);		
+		$this -> register_plugin($this -> name, __FILE__);
+		$this -> initialize_options();	
 		
 		$this -> add_action('widgets_init', 'mref_widget_register', 10, 1);
 		$this -> add_action('admin_head');
@@ -49,7 +50,9 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		$linkdescriptions = $options[$number]['linkdescriptions'];
 		$catrsslinks = $options[$number]['catrsslinks'];
 		$itemdates = $options[$number]['itemdates'];
+		$dateformat = $options[$number]['dateformat'];
 		$pagesparent = $options[$number]['pagesparent'];
+		$hide_empty = $options[$number]['hide_empty'];
 		$titlelink = $options[$number]['titlelink'];
 		$titlelinkurl = $options[$number]['titlelinkurl'];
 		$levels = $options[$number]['levels'];
@@ -77,7 +80,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 						$items[] = array(
 							'title'			=>	$post -> post_title,
 							'href'			=>	get_permalink($post -> ID),
-							'date'			=>	$post -> post_date,
+							'date'			=>	date($dateformat, strtotime($post -> post_date)),
 						);
 					}
 				}
@@ -117,7 +120,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 						$items[] = array(
 							'title'			=>	$page -> post_title,
 							'href'			=>	get_permalink($page -> ID),
-							'date'			=>	$page -> post_date,
+							'date'			=>	date($dateformat, strtotime($page -> post_date)),
 						);
 						
 						$childargs = array(
@@ -143,11 +146,12 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			}
 			
 			$category_args = array(
+				'number'			=>	(empty($numberitems)) ? false : $numberitems,
 				'parent'			=>	($parent_id == "all") ? false : $parent_id,
 				'order'				=>	$order,
 				'orderby'			=>	(empty($orderby) || $orderby != "date") ? 'name' : 'ID',
 				'exclude'			=>	(empty($exclude)) ? false : $exclude,
-				'hide_empty'		=>	true,
+				'hide_empty'		=>	(empty($hide_empty) || $hide_empty == "Y") ? true : false,
 			);
 			
 			if ($categories = get_categories($category_args)) {
@@ -155,9 +159,10 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				
 				$items = array();
 				$levels = $options[$number]['levels'];
+				$c = 0;
 				
 				foreach ($categories as $category) {				
-					$items[] = array(
+					$items[$c] = array(
 						'title'			=>	$category -> cat_name,
 						'href'			=>	get_category_link($category -> cat_ID),
 					);
@@ -171,6 +176,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					);
 					
 					$this -> get_categories($childargs);
+					$c++;
 				}
 			}
 		} elseif (ereg("links", $recent)) {
@@ -187,14 +193,20 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			
 			if ($links = get_bookmarks($link_args)) {
 				$items = array();
+				$l = 0;
 				
-				foreach ($links as $link) {
-					$items[] = array(
+				foreach ($links as $link) {				
+					$items[$l] = array(
 						'title'			=>	$link -> link_name,
 						'href'			=>	$link -> link_url,
 						'description'	=>	strip_tags($link -> link_description),
 						'date'			=>	$link -> link_updated,
 					);
+					
+					$items[$l]['date'] = (empty($link -> link_updated) || strtotime($link -> link_updated) == false || $link -> link_updated == "0000-00-00 00:00:00") ? date("Y-m-d H:i:s", time()) : $link -> link_updated;
+					$items[$l]['date'] = date($dateformat, strtotime($items[$l]['date']));
+					
+					$l++;
 				}
 			}
 		} elseif (ereg("comments", $recent)) {
@@ -229,7 +241,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					$items[] = array(
 						'title'			=>	$comment -> comment_content,
 						'href'			=>	get_permalink($comment -> comment_post_ID) . "#comment-" . $comment -> comment_ID,
-						'date'			=>	$comment -> comment_date,
+						'date'			=>	date($dateformat, strtotime($comment -> comment_date)),
 					);
 				}
 			}
@@ -320,12 +332,14 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					$linkdescriptions = $widget_values['linkdescriptions'];
 					$catrsslinks = $widget_values['catrsslinks'];
 					$itemdates = $widget_values['itemdates'];
+					$dateformat = $widget_values['dateformat'];
 					$pagesparent = $widget_values['pagesparent'];
+					$hide_empty = $widget_values['hide_empty'];
 					$titlelink = $widget_values['titlelink'];
 					$titlelinkurl = $widget_values['titlelinkurl'];
 					$levels = $widget_values['levels'];
 					
-					$options[$widget_number] = compact('title', 'recent', 'orderby', 'order', 'max_length', 'exclude', 'numberitems', 'linkdescriptions', 'catrsslinks', 'itemdates', 'pagesparent', 'titlelink', 'titlelinkurl', 'levels');
+					$options[$widget_number] = compact('title', 'recent', 'orderby', 'order', 'max_length', 'exclude', 'numberitems', 'linkdescriptions', 'catrsslinks', 'itemdates', 'dateformat', 'pagesparent', 'hide_empty', 'titlelink', 'titlelinkurl', 'levels');
 				}
 			}
 	
@@ -342,7 +356,10 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			$max_length = 50;
 			$exclude = '';
 			$numberitems = 5;
+			$itemdates = false;
+			$dateformat = "Y-m-d H:i:s";
 			$pagesparent = "Y";
+			$hide_empty = "Y";
 			$titlelink = "";
 			$titlelinkurl = "";
 			$levels = 1;
@@ -357,7 +374,9 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			$linkdescriptions = $options[$number]['linkdescriptions'];
 			$catrsslinks = $options[$number]['catrsslinks'];
 			$itemdates = $options[$number]['itemdates'];
+			$dateformat = $options[$number]['dateformat'];
 			$pagesparent = $options[$number]['pagesparent'];
+			$hide_empty = $options[$number]['hide_empty'];
 			$titlelink = $options[$number]['titlelink'];
 			$titlelinkurl = $options[$number]['titlelinkurl'];
 			$levels = $options[$number]['levels'];
@@ -433,6 +452,14 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			</p>
 		</div>
 		
+		<div id="hideempty_div<?= $number; ?>" style="display:<?= (!empty($recent) && ereg("categories", $recent)) ? 'block' : 'none'; ?>;">
+			<p>
+				<?php _e('Hide Empty Categories', $this -> plugin_name); ?> :
+				<label><input <?= (empty($hide_empty) || $hide_empty == "Y") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][hide_empty]" value="Y" id="mref_widget_<?= $number; ?>_hideemptyY" /> <?php _e('Yes', $this -> plugin_name); ?></label>
+				<label><input <?= ($hide_empty == "N") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][hide_empty]" value="N" id="mref_widget_<?= $number; ?>_hideemptyN" /> <?php _e('No', $this -> plugin_name); ?></label>
+			</p>
+		</div>
+		
 		<p>
 			<label for="mref_widget_<?= $number; ?>_numberitems">
 				<?php _e('Number of Items', $this -> plugin_name); ?> :
@@ -458,7 +485,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			<?php _e('Options', $this -> plugin_name); ?> :<br/>
 			<label><input <?= (!empty($linkdescriptions) && $linkdescriptions == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?= $number; ?>][linkdescriptions]" value="Y" /> <?php _e('Show link descriptions', $this -> plugin_name); ?></label><br/>
 			<label><input <?= (!empty($catrsslinks) && $catrsslinks == "Y") ? 'checked="checked"' : ''; ?> onclick="titlelinktoggle('<?= $number; ?>');" type="checkbox" id="mref_widget_<?= $number; ?>_catrsslinks" name="mref-widget[<?= $number; ?>][catrsslinks]" value="Y" /> <?php _e('Show RSS links for categories', $this -> plugin_name); ?></label><br/>			
-			<label><input <?= (!empty($itemdates) && $itemdates == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?= $number; ?>][itemdates]" value="Y" /> <?php _e('Show date for each item', $this -> plugin_name); ?></label><br/>
+			<label><input onclick="showitemdates(<?= $number; ?>);" <?= (!empty($itemdates) && $itemdates == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?= $number; ?>][itemdates]" value="Y" id="mref_widget_<?= $number; ?>_itemdates" /> <?php _e('Show date for each item', $this -> plugin_name); ?></label><br/>			
 			<label><input onclick="titlelinktoggle('<?= $number; ?>');" <?= (!empty($titlelink) && $titlelink == "Y") ? 'checked="checked"' : ''; ?> id="mref_widget_<?= $number; ?>_titlelink" type="checkbox" name="mref-widget[<?= $number; ?>][titlelink]" value="Y" /> <?php _e('Apply link to title', $this -> plugin_name); ?></label>
 			
 			<div id="mref_widget_<?= $number; ?>_titlelinkdiv" style="display:<?= (!empty($titlelink) && $titlelink == "Y") ? 'block' : 'none'; ?>;">
@@ -468,10 +495,22 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				</label>
 			</div>
 		</p>
+			<p id="mref_widget_<?= $number; ?>_itemdatesY" style="display:<?= (!empty($itemdates) && $itemdates == "Y") ? 'block' : 'none'; ?>;">
+				<label for="mref_widget_<?= $number; ?>_dateformat">
+					<?php $dateformats = $this -> get_option('dateformats'); ?>
+					<?php _e('Date Format', $this -> plugin_name); ?> :
+					<select id="mref_widget_<?= $number; ?>_dateformat" name="mref-widget[<?= $number; ?>][dateformat]" class="widefat">
+						<option value="">- <?php _e('Select Date Format', $this -> plugin_name); ?> -</option>
+						<?php foreach ($dateformats as $format) : ?>
+							<option value="<?= $format; ?>" <?= (!empty($dateformat) && $dateformat == $format) ? 'selected="selected"' : ''; ?>><?= date($format, time()); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</label>
+			</p>
 		<p>
 			<label for="mref_widget_<?= $number; ?>_max_length">
 				<?php _e('Max Length', $this -> plugin_name); ?> :
-				<input style="width:25px; text-align:center;" type="text" id="mref_widget_<?= $number; ?>_max_length" size="5" name="mref-widget[<?= $number; ?>][max_length]" value="<?= $max_length; ?>" /> <?php _e('characters', $this -> plugin_name); ?>
+				<input style="width:45px; text-align:center;" type="text" id="mref_widget_<?= $number; ?>_max_length" size="5" name="mref-widget[<?= $number; ?>][max_length]" value="<?= $max_length; ?>" /> <?php _e('characters', $this -> plugin_name); ?>
 				<br/><small>leave empty to show full titles</small>
 			</label>
 		</p>
