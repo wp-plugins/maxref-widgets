@@ -1,21 +1,20 @@
 === MaxRef-Widget ===
 
 Contributors: Scott Frangos, Antonie Potgieter
-Donate link:  http://webfadds.com/overview/plugins/
+Donate link:  http://www.webfadds.com/overview/plugins/
 Tags: widget, sidebar, posts, links, pages, rss, widgets
 Requires at least: 2.5
-Tested up to: 2.6.1
-Version: 1.7
-Stable tag: 1.7
+Tested up to: 2.7
+Version: 1.8
+Stable tag: 1.8
 
 MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
 
 == Description ==
 
-MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars to display posts only from a certain category, the links from a particular link category, comments and more.  Choose how many items appear, to display an RSS feed for categories, and how to sort the links presented.  WebFadds.com (Scott Frangos) and Tribulant Software (Antonie Potgieter) teamed up to create an original new, reconcepted plugin with enhancements that is fully WordPress 2.5 compliant.
+MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars to display posts only from a certain category, the links from a particular link category, comments and more.  Choose how many items appear, to display an RSS feed for categories, and how to sort the links presented.  <a href="http://www.webfadds.com">WebFadds</a> (Scott Frangos) and <a href="http://tribulant.com">Tribulant Software</a> (Antonie Potgieter) teamed up to create an original new, reconcepted plugin with enhancements that is fully WordPress 2.5 compliant.
 
-Changes:  Visit us at http://webfadds.com/overview/plugins/
-for news and updates.
+Changes: Visit us at http://www.webfadds.com/overview/plugins/ OR http://blog.tribulant.com/category/maxref-widgets/ for news and updates.
 
 == Installation ==
 
@@ -59,8 +58,8 @@ Version 1.3 released May 12, 2008
 Version 1.4 released May 18, 2008
 Version 1.5 released May 26, 2008
 Version 1.6 released June 14, 2008
-Version 1.7 released August 2
-
+Version 1.7 released August 2, 2008
+Version 1.8 released February 10, 2009
 
 == WordPress Security Note ==
 As with any WordPress plugin, for security reasons, you should only download plugins from the author's site and from official WordPress repositories. When other sites host a plugin that is developed by someone else, they may inject code into that could compromise the security of your blog. We cannot endorse a version of this that you may have downloaded from another site.
