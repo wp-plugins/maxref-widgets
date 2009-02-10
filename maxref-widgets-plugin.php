@@ -2,7 +2,7 @@
 
 class mrefWidgetsPlugin {
 
-	var $version = '1.7';
+	var $version = '1.8';
 	var $plugin_name = '';
 	var $plugin_base = '';
 	var $debugging = false;	
@@ -26,6 +26,56 @@ class mrefWidgetsPlugin {
 		}
 		
 		return true;
+	}
+	
+	function initialize_options() {
+		$dateformats = array(
+			"Y-m-d H:i:s",
+			"F j, Y, g:i a",
+			"m.d.y",
+			"j, n, Y",
+			"Ymd",
+			'h-i-s, j-m-y',
+			"D M j G:i:s T Y",
+			'H:m:s',
+			"H:i:s",
+		);
+	
+		$this -> add_option('dateformats', $dateformats);
+		
+		return true;
+	}
+	
+	function add_option($name = '', $value = '') {
+		if (add_option($this -> pre . $name, $value)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function update_option($name = '', $value = '') {
+		if (update_option($this -> pre . $name, $value)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function get_option($name = '', $stripslashes = true) {
+		if ($option = get_option($this -> pre . $name)) {
+			if (@unserialize($option) !== false) {
+				return unserialize($option);
+			}
+			
+			if ($stripslashes == true) {
+				$option = stripslashes_deep($option);
+			}
+			
+			return $option;
+		}
+		
+		return false;
 	}
 	
 	function add_action($action, $function = '', $priority = 10, $params = array()) {
