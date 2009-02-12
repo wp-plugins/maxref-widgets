@@ -2,11 +2,16 @@
 	<?= $args['before_title']; ?><?= (!empty($args['titlelink']) && $args['titlelink'] == "Y") ? '<a href="' . $args['titlelinkurl'] . '" title="' . $args['title'] . '">' : ''; ?><?= $args['title']; ?><?= (!empty($args['titlelink']) && $args['titlelink'] == "Y") ? '</a>' : ''; ?><?= $args['after_title']; ?>
 	<?php if (!empty($args['parent'])) : ?>
 		<ul>
-			<li><a href="<?= $args['parent']['href']; ?>" title="<?= $args['parent']['title']; ?>"><?= $args['parent']['title']; ?></a>
+			<li>
+				<a href="<?= $args['parent']['href']; ?>" title="<?= $args['parent']['title']; ?>"><?= $args['parent']['title']; ?></a>
 	<?php endif; ?>
 	<ul>
 		<?php foreach ($items as $item) : ?>
 			<li>
+				<?php if (!empty($item['rsslink']) && $item['rsslink'] == true) : ?>
+					<a class="rsswidget" href="<?= get_option('home'); ?>/?feed=rss2&amp;cat=<?= $item['cat_ID']; ?>" title="<?php _e('RSS Feed', $this -> plugin_name); ?>">
+					<img src="<?= get_option('siteurl'); ?>/wp-includes/images/rss.png" alt="<?php _e('rss', $this -> plugin_name); ?>" /></a>
+				<?php endif; ?>
 				<a href="<?= $item['href']; ?>" title="<?= $item['title']; ?>"><?= (!empty($args['max_length']) && strlen($item['title']) > $args['max_length']) ? substr($item['title'], 0, $args['max_length']) . '...' : $item['title']; ?></a>
 				<?php if (!empty($item['description']) && !empty($args['linkdescriptions']) && $args['linkdescriptions'] == "Y") : ?>
 					<br/><small><?= $item['description']; ?></small>
