@@ -2,7 +2,7 @@
 
 class mrefWidgetsPlugin {
 
-	var $version = '1.8';
+	var $version = '1.8.1';
 	var $plugin_name = '';
 	var $plugin_base = '';
 	var $debugging = false;	

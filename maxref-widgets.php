@@ -2,11 +2,11 @@
 
 /*
 Plugin Name: Maxref Widgets
-Plugin URI: http://maxref.tribulant.net
+Plugin URI: http://www.webfadds.com/plugins/
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.8
+Version: 1.8.1
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -143,6 +143,9 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$parent = get_category($parent_id);
 				$args['parent']['title'] = $parent -> cat_name;
 				$args['parent']['href'] = get_category_link($parent -> cat_ID);
+				$allcategories = false;
+			} else {
+				$allcategories = true;
 			}
 			
 			$category_args = array(
@@ -165,6 +168,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					$items[$c] = array(
 						'title'			=>	$category -> cat_name,
 						'href'			=>	get_category_link($category -> cat_ID),
+						'cat_ID'		=>	$category -> cat_ID,
 					);
 					
 					$childargs = array(
@@ -249,9 +253,10 @@ class mrefWidgets extends mrefWidgetsPlugin {
 
 		if (!empty($items)) {
 			if (!empty($catrsslinks) && $catrsslinks == "Y") {
-				$catrss = '';				
-				if (!empty($category) && $category != "all") {
-					$catrss = '&amp;cat=' . $category;
+				$catrss = '';
+				
+				if (!empty($category) && $allcategories == false) {
+					$catrss = '&amp;cat=' . $parent_id;
 				}
 			
 				$oldtitle = $title;
@@ -261,6 +266,12 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$title .= $rssatag;
 				$title .= $oldtitle;
 				$title .= '</a>';
+				
+				if (!empty($items)) {
+					foreach ($items as $ikey => $ival) {
+						$items[$ikey]['rsslink'] = true;
+					}
+				}
 			}
 		
 			$args['title'] = (empty($title)) ? '' : $title;
@@ -414,7 +425,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					</optgroup>
 					<optgroup label="<?php _e('Categories', $this -> plugin_name); ?>">
 						<option <?= (!empty($recent) && $recent == "categories-all") ? 'selected="selected"' : ''; ?> value="categories-all"><?php _e('All Categories', $this -> plugin_name); ?></option>
-						<?php $categories = get_categories(array('number' => false, 'hide_empty' => true, 'child_of' => 0, 'order' => "ASC", 'orderby' => "name")); ?>
+						<?php $categories = get_categories(array('number' => false, 'hide_empty' => false, 'child_of' => 0, 'order' => "ASC", 'orderby' => "name")); ?>
 						<?php if (!empty($categories)) : ?>
 							<?php foreach ($categories as $category) : ?>
 								<option <?= (!empty($recent) && $recent == "categories-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="categories-<?= $category -> cat_ID; ?>"><?php _e('Children of', $this -> plugin_name); ?> : <?= $category -> cat_name; ?> (<?= count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false))); ?>)</option>
