@@ -6,7 +6,7 @@ Plugin URI: http://www.webfadds.com/plugins/
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.8.1
+Version: 1.9
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -16,11 +16,15 @@ class mrefWidgets extends mrefWidgetsPlugin {
 	var $name = 'maxref-widgets';
 	
 	function mrefWidgets() {
+		$url = explode("&", $_SERVER['REQUEST_URI']);
+		$this -> url = $url[0];
+	
 		$this -> register_plugin($this -> name, __FILE__);
 		$this -> initialize_options();	
 		
 		$this -> add_action('widgets_init', 'mref_widget_register', 10, 1);
 		$this -> add_action('admin_head');
+		$this -> add_action('wp_head');
 		
 		return true;
 	}
@@ -47,6 +51,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		$max_length = $options[$number]['max_length'];
 		$exclude = $options[$number]['exclude'];
 		$numberitems = $options[$number]['numberitems'];
+		$rotateposts = $options[$number]['rotateposts'];
 		$linkdescriptions = $options[$number]['linkdescriptions'];
 		$catrsslinks = $options[$number]['catrsslinks'];
 		$itemdates = $options[$number]['itemdates'];
@@ -63,11 +68,43 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			if ($post_type == "post") {
 				preg_match("%^posts\-(.*?)$%si", $recent, $matches);
 				$category = $matches[1];
+				$newcategory = (empty($category) || $category == "all") ? false : $category;
 				
+				//should posts be rotated by category?
+				if (!empty($rotateposts) && $rotateposts == "Y") {					
+					$category_args = array(
+						'type'					=>	"post",
+						'number'				=>	false,
+						'orderby'				=>	"name",
+						'order'					=>	"ASC",
+						'hide_empty'			=>	true,
+					);
+					
+					$currid = 0;
+					
+					if ($categories = get_categories($category_args)) {					
+						//check if a category's posts has been rotated
+						if (${'rotateposts' . $number} = $this -> get_option('rotateposts' . $number)) {
+							
+							if (!empty($categories[${'rotateposts' . $number}])) {
+								$newcategory = $categories[${'rotateposts' . $number}] -> cat_ID;
+								$currid = ${'rotateposts' . $number};
+							} else {
+								$newcategory = $categories[0] -> cat_ID;
+							}
+						} else {
+							$newcategory = $categories[0] -> cat_ID;
+						}
+					}
+					
+					$this -> update_option('rotateposts' . $number, ($currid + 1));
+				}
+				
+				//WP post arguments for get_posts()
 				$post_args = array(
 					'numberposts'		=>	(empty($numberitems)) ? false : $numberitems,
-					'category'			=>	(empty($category) || $category == "all") ? false : $category,
-					'orderby'			=>	(empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date',
+					'category'			=>	$newcategory,
+					'orderby'			=>	(empty($orderby) || $orderby == "name") ? 'title' : 'date',
 					'order'				=>	(empty($order) || $order == "ASC") ? 'ASC' : 'DESC',
 					'exclude'			=>	(empty($exclude)) ? false : $exclude,
 					'post_type'			=>	$post_type
@@ -97,7 +134,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$page_args = array(
 					'child_of'			=>	(empty($child_of) || $child_of == "all") ? 0 : $child_of,
 					'sort_order'		=>	(empty($order) || $order == "ASC") ? 'ASC' : 'DESC',
-					'sort_column'		=>	(empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date',
+					'sort_column'		=>	(empty($orderby) || $orderby == "name") ? 'title' : 'date',
 					'exclude'			=>	(empty($exclude)) ? false : $exclude
 				);
 				
@@ -106,7 +143,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
 				$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
 				$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
-				$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
+				$orderby = (empty($orderby) || $orderby == "name") ? 'title' : 'date';
 				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
 				
 				if ($pages = $wpdb -> get_results($page_query)) {
@@ -340,6 +377,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					$max_length = $widget_values['max_length'];
 					$exclude = $widget_values['exclude'];
 					$numberitems = $widget_values['numberitems'];
+					$rotateposts = $widget_values['rotateposts'];
 					$linkdescriptions = $widget_values['linkdescriptions'];
 					$catrsslinks = $widget_values['catrsslinks'];
 					$itemdates = $widget_values['itemdates'];
@@ -350,7 +388,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					$titlelinkurl = $widget_values['titlelinkurl'];
 					$levels = $widget_values['levels'];
 					
-					$options[$widget_number] = compact('title', 'recent', 'orderby', 'order', 'max_length', 'exclude', 'numberitems', 'linkdescriptions', 'catrsslinks', 'itemdates', 'dateformat', 'pagesparent', 'hide_empty', 'titlelink', 'titlelinkurl', 'levels');
+					$options[$widget_number] = compact('title', 'recent', 'orderby', 'order', 'max_length', 'exclude', 'numberitems', 'rotateposts', 'linkdescriptions', 'catrsslinks', 'itemdates', 'dateformat', 'pagesparent', 'hide_empty', 'titlelink', 'titlelinkurl', 'levels');
 				}
 			}
 	
@@ -367,6 +405,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			$max_length = 50;
 			$exclude = '';
 			$numberitems = 5;
+			$rotateposts = false;
 			$itemdates = false;
 			$dateformat = "Y-m-d H:i:s";
 			$pagesparent = "Y";
@@ -382,6 +421,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			$max_length = $options[$number]['max_length'];
 			$exclude = $options[$number]['exclude'];
 			$numberitems = $options[$number]['numberitems'];
+			$rotateposts = $options[$number]['rotateposts'];
 			$linkdescriptions = $options[$number]['linkdescriptions'];
 			$catrsslinks = $options[$number]['catrsslinks'];
 			$itemdates = $options[$number]['itemdates'];
@@ -394,6 +434,10 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		}
 		
 		?>
+		
+		<div class="<?= $this -> pre; ?>notice">
+			<p><?php _e('MaxRef free/link supported.', $this -> plugin_name); ?> <a href="http://www.webfadds.com/plugins/maxrefnonad" target="_blank" title="<?php _e('Donate to the MaxRef Widgets plugin', $this -> plugin_name); ?>"><?php _e('Make donation', $this -> plugin_name); ?></a> <?php _e(' to download MaxRef with no link.', $this -> plugin_name); ?></p>
+		</div>
 		
 		<p>
 			<label for="mref_widget_<?= $number; ?>_title">
@@ -474,8 +518,15 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		<p>
 			<label for="mref_widget_<?= $number; ?>_numberitems">
 				<?php _e('Number of Items', $this -> plugin_name); ?> :
-				<input style="width:25px; text-align:center;" id="mref_widget_<?= $number; ?>_numberitems" type="text" name="mref-widget[<?= $number; ?>][numberitems]" size="3" value="<?= $numberitems; ?>" /> <?php _e('items', $this -> plugin_name); ?>
-				<br/><small>leave empty to show all</small></td>
+				<input style="width:45px; text-align:center;" id="mref_widget_<?= $number; ?>_numberitems" type="text" name="mref-widget[<?= $number; ?>][numberitems]" size="3" value="<?= $numberitems; ?>" /> <?php _e('items', $this -> plugin_name); ?>
+				<br/><small><?php _e('leave empty to show all', $this -> plugin_name); ?></small></td>
+			</label>
+		</p>
+		<p>
+			<label for="mref_widget_<?= $number; ?>_rotateposts" id="mref_widget_<?= $number; ?>_rotatepostslabel" style="color:#999999;">
+				<input type="checkbox" <?= (!empty($rotateposts) && $rotateposts == "Y") ? 'checked="checked"' : 'disabled="disabled"'; ?> name="mref-widget[<?= $number; ?>][rotateposts]" value="Y" id="mref_widget_<?= $number; ?>_rotateposts" />
+				<?php _e('Rotate Number of Posts Specified', $this -> plugin_name); ?>
+				<br/><small><?php _e('only works when "Display" is set to Posts:: All Categories', $this -> plugin_name); ?></small>
 			</label>
 		</p>
 		<p>
@@ -533,6 +584,16 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		</p>
 		
 		<?php
+		
+		if (!empty($recent)) {
+			?>
+			
+			<script type="text/javascript">
+			change_display('<?= $recent; ?>','<?= $number; ?>');
+			</script>
+			
+			<?php
+		}
 	}
 	
 	function mref_widget_register() {		
@@ -562,6 +623,10 @@ class mrefWidgets extends mrefWidgetsPlugin {
 	
 	function admin_head() {
 		$this -> render('head', false, true, 'admin');
+	}
+	
+	function wp_head() {
+		$this -> render('head', false, true, 'default');
 	}
 }
 

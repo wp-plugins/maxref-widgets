@@ -2,7 +2,8 @@
 
 class mrefWidgetsPlugin {
 
-	var $version = '1.8.1';
+	var $version = '1.9';
+	var $url = '';
 	var $plugin_name = '';
 	var $plugin_base = '';
 	var $debugging = false;	
@@ -42,6 +43,7 @@ class mrefWidgetsPlugin {
 		);
 	
 		$this -> add_option('dateformats', $dateformats);
+		$this -> add_option('adversion', "Y");
 		
 		return true;
 	}

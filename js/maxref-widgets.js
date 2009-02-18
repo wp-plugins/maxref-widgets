@@ -7,6 +7,9 @@ function change_display(display, number) {
 	
 	var hideemptydiv = document.getElementById('hideempty_div' + number);
 	hideemptydiv.style.display = "none";
+	
+	var rotateposts = document.getElementById('mref_widget_' + number + '_rotateposts');
+	rotateposts.disabled = true;
 
 	if (display.match(/pages|categories\-\d+/)) {
 		thediv.style.display = "block";
@@ -15,6 +18,15 @@ function change_display(display, number) {
 	
 	if (display.match(/categories\-\d+/)) {
 		hideemptydiv.style.display = "block";
+	}
+	
+	if (display.match(/posts\-all/) && display == "posts-all") {
+		rotateposts.disabled = false;
+		document.getElementById('mref_widget_' + number + '_rotatepostslabel').style.color = "#000000";
+	} else {
+		rotateposts.disabled = true;
+		rotateposts.checked = false;
+		document.getElementById('mref_widget_' + number + '_rotatepostslabel').style.color = "#999999";
 	}
 }
 

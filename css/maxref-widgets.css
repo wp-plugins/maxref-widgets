@@ -1,0 +1,32 @@
+/* WP ADMIN */
+
+.mrefnotice {
+	border-width: 1px;
+	border-style: solid;
+	padding: 0 0.6em;
+	margin: 5px 15px 2px;
+	-moz-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background-color: #FFFBCC;
+	border-color: #CC0000;
+}
+
+.mrefnotice p {
+	margin: 5px 0 !important;
+	line-height: 1;
+	padding: 2px;
+}
+
+.wrap .mrefnotice {
+	margin: 5px 0 10px 0 !important;
+}
+
+/* WP FRONT */
+
+p.mrefad {
+	color: rgb(119, 119, 119);
+	padding: 8px 0 0 10px;
+	font-style: italic;
+}

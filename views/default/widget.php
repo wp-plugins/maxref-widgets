@@ -26,4 +26,10 @@
 			</li>
 		</ul>
 	<?php endif; ?>
+
+	<?php if ($this -> get_option('adversion') && $this -> get_option('adversion') == "Y") : ?>	
+		<p class="<?= $this -> pre; ?>ad">
+			<small>MaxRef by <a href="http://www.webfadds.com" title="WebFadds">WebFadds.com</a></small>
+		</p>
+	<?php endif; ?>
 <?= $args['after_widget']; ?>
