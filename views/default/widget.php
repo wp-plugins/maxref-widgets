@@ -10,7 +10,7 @@
 			<li>
 				<?php if (!empty($item['rsslink']) && $item['rsslink'] == true) : ?>
 					<a class="rsswidget" href="<?= get_option('home'); ?>/?feed=rss2&amp;cat=<?= $item['cat_ID']; ?>" title="<?php _e('RSS Feed', $this -> plugin_name); ?>">
-					<img src="<?= get_option('siteurl'); ?>/wp-includes/images/rss.png" alt="<?php _e('rss', $this -> plugin_name); ?>" /></a>
+					<img style="border:none !important;" src="<?= get_option('siteurl'); ?>/wp-includes/images/rss.png" alt="<?php _e('rss', $this -> plugin_name); ?>" /></a>
 				<?php endif; ?>
 				<a href="<?= $item['href']; ?>" title="<?= $item['title']; ?>"><?= (!empty($args['max_length']) && strlen($item['title']) > $args['max_length']) ? substr($item['title'], 0, $args['max_length']) . '...' : $item['title']; ?></a>
 				<?php if (!empty($item['description']) && !empty($args['linkdescriptions']) && $args['linkdescriptions'] == "Y") : ?>
@@ -27,7 +27,7 @@
 		</ul>
 	<?php endif; ?>
 
-	<?php if ($this -> get_option('adversion') && $this -> get_option('adversion') == "Y") : ?>	
+	<?php if (!empty($this -> adversion) && $this -> adversion == true) : ?>	
 		<p class="<?= $this -> pre; ?>ad">
 			<small>MaxRef by <a href="http://www.webfadds.com" title="WebFadds">WebFadds.com</a></small>
 		</p>
