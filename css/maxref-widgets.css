@@ -27,6 +27,16 @@
 
 p.mrefad {
 	color: rgb(119, 119, 119);
-	padding: 8px 0 0 10px;
+	padding: 13px 0 0 10px;
 	font-style: italic;
+	text-align: center;
+	display: block;
+}
+
+a.rsswidget {
+	text-decoration: none;
+}
+
+a.rsswidget img {
+	border: none !important;
 }

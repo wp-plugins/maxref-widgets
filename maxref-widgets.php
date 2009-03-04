@@ -6,7 +6,7 @@ Plugin URI: http://www.webfadds.com/plugins/
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.9
+Version: 1.9.1
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -134,7 +134,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$page_args = array(
 					'child_of'			=>	(empty($child_of) || $child_of == "all") ? 0 : $child_of,
 					'sort_order'		=>	(empty($order) || $order == "ASC") ? 'ASC' : 'DESC',
-					'sort_column'		=>	(empty($orderby) || $orderby == "name") ? 'title' : 'date',
+					'sort_column'		=>	(empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date',
 					'exclude'			=>	(empty($exclude)) ? false : $exclude
 				);
 				
@@ -143,7 +143,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
 				$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
 				$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
-				$orderby = (empty($orderby) || $orderby == "name") ? 'title' : 'date';
+				$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
 				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
 				
 				if ($pages = $wpdb -> get_results($page_query)) {
@@ -298,7 +298,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			
 				$oldtitle = $title;
 				$rssatag = $title = '<a class="rsswidget" href="' . get_option('home') . '/?feed=rss2' . $catrss . '" title="' . __('RSS Feed', $this -> plugin_name) . '">';
-				$title .= '<img src="' . get_option('siteurl') . '/wp-includes/images/rss.png" alt="' . __('rss', $this -> plugin_name) . '" />';
+				$title .= '<img style="border:none !important;" src="' . get_option('siteurl') . '/wp-includes/images/rss.png" alt="' . __('rss', $this -> plugin_name) . '" />';
 				$title .= '</a> ';
 				$title .= $rssatag;
 				$title .= $oldtitle;
@@ -434,10 +434,12 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		}
 		
 		?>
-		
-		<div class="<?= $this -> pre; ?>notice">
-			<p><?php _e('MaxRef free/link supported.', $this -> plugin_name); ?> <a href="http://www.webfadds.com/plugins/maxrefnonad" target="_blank" title="<?php _e('Donate to the MaxRef Widgets plugin', $this -> plugin_name); ?>"><?php _e('Make donation', $this -> plugin_name); ?></a> <?php _e(' to download MaxRef with no link.', $this -> plugin_name); ?></p>
-		</div>
+
+		<?php if (!empty($this -> adversion) && $this -> adversion == true) : ?>		
+			<div class="<?= $this -> pre; ?>notice">
+				<p><?php _e('MaxRef free/link supported.', $this -> plugin_name); ?> <a href="http://www.webfadds.com/plugins/maxrefnonad" target="_blank" title="<?php _e('Donate to the MaxRef Widgets plugin', $this -> plugin_name); ?>"><?php _e('Make donation', $this -> plugin_name); ?></a> <?php _e(' to download MaxRef with no link.', $this -> plugin_name); ?></p>
+			</div>
+		<?php endif; ?>
 		
 		<p>
 			<label for="mref_widget_<?= $number; ?>_title">
