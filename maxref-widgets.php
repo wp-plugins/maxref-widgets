@@ -6,7 +6,7 @@ Plugin URI: http://www.webfadds.com/plugins/
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.9.1
+Version: 1.9.5
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');

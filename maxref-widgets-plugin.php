@@ -2,7 +2,7 @@
 
 class mrefWidgetsPlugin {
 
-	var $version = '1.9.1';
+	var $version = '1.9.5';
 	var $url = '';
 	var $plugin_name = '';
 	var $plugin_base = '';
@@ -18,7 +18,7 @@ class mrefWidgetsPlugin {
 		$this -> plugin_base = rtrim(dirname($base), '/');
 		
 		if (function_exists('load_plugin_textdomain')) {		
-			load_plugin_textdomain($this -> plugin_name, '/wp-content/plugins/' . $this -> plugin_name . '/');
+			load_plugin_textdomain($this -> plugin_name, PLUGINDIR .'/'. $this -> plugin_name . '/');
 		}
 		
 		if ($this -> debugging) {
