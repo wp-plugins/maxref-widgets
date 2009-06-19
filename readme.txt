@@ -1,6 +1,6 @@
 === MaxRef-Widget ===
 
-Contributors: Scott Frangos, Antonie Potgieter
+Contributors: Scott Frangos, Antonie Potgieter, Sakin Shrestha
 Donate link:  http://www.webfadds.com/overview/plugins/
 Tags: widget, sidebar, posts, links, pages, rss, widgets
 Requires at least: 2.5
@@ -12,7 +12,7 @@ MaxRef Widgets enables you to display multiple sidebar widgets to maximize how y
 
 == Description ==
 
-MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars to display posts only from a certain category, the links from a particular link category, comments and more.  Choose how many items appear, to display an RSS feed for categories, and how to sort the links presented.  <a href="http://www.webfadds.com">WebFadds</a> (Scott Frangos) teamed up with programmer Antonie Potgieter <a href="http://tribulant.com">(Tribulant Software)</a> (Antonie Potgieter) to create an original new and  reconcepted plugin. Now with the help of new programmer Sakin Shrestha <a href="http://digital.com.np">(DMS)</a> enhance the plugin that is fully WordPress 2.8 compliant.
+MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars to display posts only from a certain category, the links from a particular link category, comments and more.  Choose how many items appear, to display an RSS feed for categories, and how to sort the links presented.  <a href="http://www.webfadds.com">WebFadds</a> (Scott Frangos) teamed up with programmer Antonie Potgieter <a href="http://tribulant.com">(Tribulant Software)</a> (Antonie Potgieter) to create an original new and  reconcepted plugin. Now with the help of new programmer Sakin Shrestha <a href="http://digital.com.np">(Digital Max Solutions)</a> enhance the plugin that is fully WordPress 2.8 compliant.
 
 Changes: Visit us at http://www.webfadds.com/overview/plugins/ for news and updates
 
@@ -50,6 +50,8 @@ WebFadds.com (http://www.webfadds.com/overview) specializes in development of CM
 
 Tribulant Software (http://www.tribulant.com) offers a vast range of PHP, MySQL, Javascript, etc... software solutions, including platform specific software such as Wordpress plugins; to make your everyday life on the web a breeze.  Contact Antonie Potgieter when you need custom work, and visit the website for instant purchase and downloads of popular plugins.
 
+Digital Max Solutions (http://www.digital.com.np) aim to provide a comprehensive customer oriented solutions in Information Technology (IT) including Web, Multimedia and IT consultancy services, both offshore and onshore
+
 == Version History ==
 
 Version 1.1 released May 1, 2008
@@ -63,7 +65,7 @@ Version 1.8 released February 10, 2009
 Version 1.8.1 released February 12, 2009
 Version 1.9 released February 18, 2009
 Version 1.9.1 released March 04, 2009
-Version 1.9.5 released June 16, 2009
+Version 1.9.5 released June 19, 2009
 
 == WordPress Security Note ==
 As with any WordPress plugin, for security reasons, you should only download plugins from the author's site and from official WordPress repositories. When other sites host a plugin that is developed by someone else, they may inject code into that could compromise the security of your blog. We cannot endorse a version of this that you may have downloaded from another site.
