@@ -1,8 +1,7 @@
 <?php
-
 class mrefWidgetsPlugin {
 
-	var $version = '1.9.5';
+	var $version = '1.9.6';
 	var $url = '';
 	var $plugin_name = '';
 	var $plugin_base = '';

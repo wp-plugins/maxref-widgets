@@ -4,15 +4,15 @@ Contributors: Scott Frangos, Antonie Potgieter, Sakin Shrestha
 Donate link:  http://www.webfadds.com/overview/plugins/
 Tags: widget, sidebar, posts, links, pages, rss, widgets
 Requires at least: 2.5
-Tested up to: 2.8
-Version: 1.9.5 
-Stable tag: 1.9.5
+Tested up to: 2.9 beta2
+Version: 1.9.6 
+Stable tag: 1.9.6
 
 MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
 
 == Description ==
 
-MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars to display posts only from a certain category, the links from a particular link category, comments and more.  Choose how many items appear, to display an RSS feed for categories, and how to sort the links presented.  <a href="http://www.webfadds.com">WebFadds</a> (Scott Frangos) teamed up with programmer Antonie Potgieter <a href="http://tribulant.com">(Tribulant Software)</a> (Antonie Potgieter) to create an original new and  reconcepted plugin. Now with the help of new programmer Sakin Shrestha <a href="http://digital.com.np">(Digital Max Solutions)</a> enhance the plugin that is fully WordPress 2.8 compliant.
+MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars to display posts only from a certain category, the links from a particular link category, comments and more.  Choose how many items appear, to display an RSS feed for categories, and how to sort the links presented.  <a href="http://www.webfadds.com">WebFadds</a> (Scott Frangos) teamed up with programmer Antonie Potgieter <a href="http://tribulant.com">(Tribulant Software)</a> (Antonie Potgieter) to create an original new and  reconcepted plugin. Now with the help of new programmer Sakin Shrestha <a href="http://digital.com.np">(Digital Max Solutions)</a>we have enhanced the plugin. The plugin is WordPress 2.9 compliant.
 
 Changes: Visit us at http://www.webfadds.com/overview/plugins/ for news and updates
 
@@ -66,6 +66,7 @@ Version 1.8.1 released February 12, 2009
 Version 1.9 released February 18, 2009
 Version 1.9.1 released March 04, 2009
 Version 1.9.5 released June 19, 2009
+Version 1.9.6 released December 09, 2009
 
 == WordPress Security Note ==
 As with any WordPress plugin, for security reasons, you should only download plugins from the author's site and from official WordPress repositories. When other sites host a plugin that is developed by someone else, they may inject code into that could compromise the security of your blog. We cannot endorse a version of this that you may have downloaded from another site.

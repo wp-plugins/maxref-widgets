@@ -1,12 +1,11 @@
 <?php
-
 /*
 Plugin Name: Maxref Widgets
 Plugin URI: http://www.webfadds.com/plugins/
 Author: WebFadds
 Author URI: http://webfadds.com
 Description: Display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments
-Version: 1.9.5
+Version: 1.9.6
 */
 
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
@@ -116,65 +115,59 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					foreach ($posts as $post) {
 						$items[] = array(
 							'title'			=>	$post -> post_title,
+							'post_ID'		=>  $post -> ID,
 							'href'			=>	get_permalink($post -> ID),
 							'date'			=>	date($dateformat, strtotime($post -> post_date)),
 						);
 					}
 				}
 			} elseif ($post_type == "page") {
+			    
 				preg_match("%^pages\-(.*?)$%si", $recent, $matches);
 				$child_of = $matches[1];
 				
 				if (!empty($child_of) && $child_of != "all" && $child_of != 0 && $pagesparent == "Y") {
 					$parent = get_page($child_of);
-					$args['parent']['title'] = $parent -> post_title;
+					 $args['parent']['title'] = $parent -> post_title;
 					$args['parent']['href'] = get_permalink($parent -> ID);
 				}
 				
 				$page_args = array(
-					'child_of'			=>	(empty($child_of) || $child_of == "all") ? 0 : $child_of,
-					'sort_order'		=>	(empty($order) || $order == "ASC") ? 'ASC' : 'DESC',
-					'sort_column'		=>	(empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date',
-					'exclude'			=>	(empty($exclude)) ? false : $exclude
+					'post_parent'			=>	(empty($child_of) || $child_of == "all") ? 0 : $child_of,
+					'order'					=>	(empty($order) || $order == "ASC") ? 'ASC' : 'DESC',
+					'orderby'				=>	(empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date',
+					'post__not_in'			=>	(empty($exclude)) ? false : explode(",",$exclude),
+					'post_type'				=>	'page',
+					'posts_per_page'		=>  (empty($numberitems)) ? false : (int)$numberitems
 				);
 				
-				global $wpdb;
 				
-				$page_query = "SELECT `ID`, `post_title` FROM `" . $wpdb -> posts . "`";
-				$page_query .= (empty($child_of) || $child_of == "all") ? " WHERE `post_type` = 'page'" : " WHERE `post_type` = 'page' AND `post_parent` = '" . $child_of . "'";
-				$order = (empty($order) || $order == "ASC") ? 'ASC' : 'DESC';
-				$orderby = (empty($orderby) || $orderby == "name") ? 'post_title' : 'post_date';
-				$page_query .= " ORDER BY `" . $orderby . "` " . $order . "";
+				 $pages =query_posts($page_args);
 				
-				if ($pages = $wpdb -> get_results($page_query)) {
-					global $items, $levels, $usedpages;
-				
-					$items = array();
-					$levels = $options[$number]['levels'];
-					$usedpages = array();
-					
 					foreach ($pages as $page) {
 						$items[] = array(
 							'title'			=>	$page -> post_title,
 							'href'			=>	get_permalink($page -> ID),
 							'date'			=>	date($dateformat, strtotime($page -> post_date)),
+							'page_ID'		=>  $page -> ID							
 						);
 						
 						$childargs = array(
 							'child_of'			=>	$page -> ID,
 							'order'				=>	$order,
 							'orderby'			=>	$orderby,
-							'exclude'			=>	$exclude,
+							'exclude'			=>	$exclude
 						);
 						
 						$usedpages[] = $page -> ID;					
 						$this -> get_pages($childargs);
 					}
-				}
+				wp_reset_query();
+				
 			}
 		} elseif (ereg("categories", $recent)) {		
 			preg_match("%^categories\-(.*?)$%i", $recent, $matches);
-			$parent_id = $matches[1];
+			 $parent_id = $matches[1];
 			
 			if (!empty($parent_id) && $parent_id != "all" && $parent_id != 0 && $pagesparent == "Y") {
 				$parent = get_category($parent_id);
@@ -191,7 +184,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				'order'				=>	$order,
 				'orderby'			=>	(empty($orderby) || $orderby != "date") ? 'name' : 'ID',
 				'exclude'			=>	(empty($exclude)) ? false : $exclude,
-				'hide_empty'		=>	(empty($hide_empty) || $hide_empty == "Y") ? true : false,
+				'hide_empty'		=>	(empty($hide_empty) || $hide_empty == "Y") ? true : false
 			);
 			
 			if ($categories = get_categories($category_args)) {
@@ -205,7 +198,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 					$items[$c] = array(
 						'title'			=>	$category -> cat_name,
 						'href'			=>	get_category_link($category -> cat_ID),
-						'cat_ID'		=>	$category -> cat_ID,
+						'cat_ID'		=>	$category -> cat_ID
 					);
 					
 					$childargs = array(
@@ -213,7 +206,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 						'order'			=>	$order,
 						'orderby'		=>	(empty($orderby) || $orderby != "date") ? 'name' : 'ID',
 						'exclude'		=>	(empty($exclude)) ? false : $exclude,
-						'hide_empty'	=>	true,
+						'hide_empty'	=>	true
 					);
 					
 					$this -> get_categories($childargs);
@@ -241,7 +234,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 						'title'			=>	$link -> link_name,
 						'href'			=>	$link -> link_url,
 						'description'	=>	strip_tags($link -> link_description),
-						'date'			=>	$link -> link_updated,
+						'date'			=>	$link -> link_updated
 					);
 					
 					$items[$l]['date'] = (empty($link -> link_updated) || strtotime($link -> link_updated) == false || $link -> link_updated == "0000-00-00 00:00:00") ? date("Y-m-d H:i:s", time()) : $link -> link_updated;
@@ -273,7 +266,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			}
 		
 			global $wpdb;		
-			$comments_query = "SELECT * FROM `" . $wpdb -> prefix . "comments` WHERE `comment_approved` = '1' " . $where_exclude . " ORDER BY `comment_date` " . $order . ";";
+			$comments_query = "SELECT * FROM `" . $wpdb -> prefix . "comments` WHERE `comment_approved` = '1' " . $where_exclude . " ORDER BY `comment_date` " . $order . " LIMIT $numberitems ;";
 		
 			if ($comments = $wpdb -> get_results($comments_query)) {
 				$items = array();
@@ -281,6 +274,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 				foreach ($comments as $comment) {
 					$items[] = array(
 						'title'			=>	$comment -> comment_content,
+						'comment_ID'    => $comment -> comment_ID,
 						'href'			=>	get_permalink($comment -> comment_post_ID) . "#comment-" . $comment -> comment_ID,
 						'date'			=>	date($dateformat, strtotime($comment -> comment_date)),
 					);
@@ -289,28 +283,45 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		}
 
 		if (!empty($items)) {
+		 
+				
 			if (!empty($catrsslinks) && $catrsslinks == "Y") {
 				$catrss = '';
+
+				if($recent == "categories-all")
+				  $catrss = 'rss2&amp;cat=all';
 				
-				if (!empty($category) && $allcategories == false) {
-					$catrss = '&amp;cat=' . $parent_id;
+				else if($post_type == "post" )
+				{
+				   
+				  $catrss = 'rss2';
 				}
-			
-				$oldtitle = $title;
-				$rssatag = $title = '<a class="rsswidget" href="' . get_option('home') . '/?feed=rss2' . $catrss . '" title="' . __('RSS Feed', $this -> plugin_name) . '">';
+			    else if($recent=="comments")
+				{
+				  $catrss = "comments-rss2";
+				}
+				else
+				$catrss = 'rss2';	
+							 
+				$oldtitle = $title;				
+				if($post_type != "page"){
+				$rssatag = $title = '<a class="rsswidget" href="' . get_option('home') . '/?feed=' . $catrss . '" title="' . __('RSS Feed', $this -> plugin_name) . '">';
 				$title .= '<img style="border:none !important;" src="' . get_option('siteurl') . '/wp-includes/images/rss.png" alt="' . __('rss', $this -> plugin_name) . '" />';
-				$title .= '</a> ';
+				$title .= '</a> ';				
 				$title .= $rssatag;
 				$title .= $oldtitle;
 				$title .= '</a>';
-				
+				}
 				if (!empty($items)) {
 					foreach ($items as $ikey => $ival) {
-						$items[$ikey]['rsslink'] = true;
+						if($recent == "comments")
+							$items[$ikey]['rsslink'] = false;
+						else
+							$items[$ikey]['rsslink'] = true;
+						
 					}
 				}
-			}
-		
+			}		
 			$args['title'] = (empty($title)) ? '' : $title;
 			$args['titlelink'] = (empty($titlelink)) ? 'N' : $titlelink;
 			$args['titlelinkurl'] = (empty($titlelinkurl)) ? '' : $titlelinkurl;

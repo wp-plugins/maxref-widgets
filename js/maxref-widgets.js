@@ -1,4 +1,12 @@
 function change_display(display, number) {
+	
+	if (display == "links-all")	{
+		document.getElementById('mref_widget_' + number + '_catrsslinks').checked = false;
+		document.getElementById('mref_widget_' + number + '_catrsslinks').disabled = true;
+	}
+	if (display != "links-all")	{
+		document.getElementById('mref_widget_' + number + '_catrsslinks').disabled = false;
+	}
 	var thediv = document.getElementById('pages_div' + number);
 	thediv.style.display = "none";
 	
