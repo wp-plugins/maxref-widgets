@@ -32,15 +32,15 @@ Please see official page to read Q & A, make comments and post new questions: [h
 
 License
 
-This plugin is freely distributable under the GNU GENERAL PUBLIC LICENSE license (version 2, June 1991), though we recommend you download it only from the Publisher's site (at WebFadds.com), or the official WordPress Plugin Repository. Please read the full license terms at: http://www.gnu.org/licenses/gpl-2.0.html
+This plugin is freely distributable under the GNU GENERAL PUBLIC LICENSE license (version 2, June 1991), though we recommend you download it only from the Publisher's site (at WebFadds.com), or the official WordPress Plugin Repository. Please read the full license terms at: [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/licenses/gpl-2.0.html)
 
 A TEXT DOCUMENT of the LICENSE IS INCLUDED WITH ALL PROPER DISTRIBUTIONS OF THIS SOFTWARE. 
 Support & Suggestions
 
-We offer screenshots, and instructions, plus welcome your suggestions at: http://www.webfadds.com/wordpress-services/plugins/
+We offer screenshots, and instructions, plus welcome your suggestions at: [http://www.webfadds.com/wordpress-services/plugins/](http://www.webfadds.com/wordpress-services/plugins/)
 
 About WebFadds.com 
-WebFadds is an Agency specializing in CMS Websites and Business Blogs, plus Marketing techniques optimized for Connection Cycle Marketing — CCM. We develop exclusively on the WordPress platform and offer plugin development, and theme creation services too. Visit us at: http://www.webfadds.com.
+WebFadds is an Agency specializing in CMS Websites and Business Blogs, plus Marketing techniques optimized for Connection Cycle Marketing — CCM. We develop exclusively on the WordPress platform and offer plugin development, and theme creation services too. Visit us at: [http://www.webfadds.com](http://www.webfadds.com).
 
 == Change Log ==
 
