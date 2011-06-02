@@ -1,44 +1,4 @@
 <?php
-	add_action('admin_menu', 'my_plugin_menu');
- 	function my_plugin_menu() {
-		if (get_option('sfs_admng') == '') { $sfs_admng = 'update_plugins'; } else {$sfs_admng = get_option('sfs_admng'); }
-		add_menu_page('MaxRef-Widgets', 'MaxRef-Widgets', $sfs_admng, 'manage_options', 'clear_option_page', '');
-		add_submenu_page('manage_options', 'Settings', 'Uninstall', $sfs_admng, 'clear_option_page', 'clear_option_page');
-} 
-	function clear_option_page(){
-?>
-	<div class="wrap">
-	<div id="icon-options-general" class="icon32"></div>
-	<h2>MaxRef Widgets</h2><br />
-	<form method="POST" action=""> 
-	<table cellpadding="3" cellspacing="3" width="100%" border="0">
-	  <tr>
-		<td width="37%">Do you want Uninstall the plugin? </td>
-		<td width="63%"><input name="clr_optopn" id="clr_optopn" type="checkbox" value="Clr_option" /> </td>
-	  </tr>
-	  <tr>
-		<td>&nbsp;</td>
-		<td><input id="submit" class="button-primary" type="submit" value="Submit" tabindex="5" name="submit" /></td>
-	  </tr>
-	</table>
-	</form>
-	</div>
-<?php }
- if ( $_POST['clr_optopn'] == 'Clr_option' ) {
-		 dlt_option(); 
-		 } 
-	function dlt_option(){
-		delete_option('wfmaxrefdateformats');
-		delete_option('mref-widget');
-		register_deactivation_hook(__FILE__, 'prefix_on_deactivate');
-	?> 
-	<div id="wpbody-content">
-	<div class="wrap">
-	<div id="buysell-warning" class="updated fade">
-	<p><strong>Option value has been deleted !  </strong></p></div>
-	</div></div>
-	<?php
-}
 class mrefWidgetsPlugin {
 	var $version = '2.0';
 	var $url = '';
@@ -49,7 +9,6 @@ class mrefWidgetsPlugin {
 
 	function mrefWidgetsPlugin() {
 		return true;
-		
 	}
 
 	function register_plugin($name = '', $base = '') {
@@ -199,15 +158,12 @@ class mrefWidgetsPlugin {
 		return false;
 	}
 
-
 	function debug($var = array()) {
 		if ($this -> debugging) {
 			echo '<pre>' . print_r($var, true) . '</pre>';
 		}
 		return true;
 	}
-
 	var $adversion = true;
 }
-
 ?>
