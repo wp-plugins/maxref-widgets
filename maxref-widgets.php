@@ -25,7 +25,6 @@ License: GPLv2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-
 require_once(dirname(__FILE__) . '/maxref-widgets-plugin.php');
 class mrefWidgets extends mrefWidgetsPlugin {
 	var $name = 'maxref-widgets';
@@ -453,7 +452,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 
 		?>
 <?php if (!empty($this -> adversion) && $this -> adversion == true) : ?>
-<div class="<?= $this -> pre; ?>notice">
+<div class="<?php echo $this -> pre; ?>notice">
   <p>
     <?php _e('', $this -> plugin_name); ?>
     <a href="http://www.webfadds.com/plugins/maxrefnonad" target="_blank" title="<?php _e('Donate to the MaxRef Widgets plugin', $this -> plugin_name); ?>">
@@ -475,22 +474,22 @@ class mrefWidgets extends mrefWidgetsPlugin {
 <div class="displaypanel" style="display:<?php if ($widget_values['call'] == "display") { echo "block"; } else { echo "none"; } ?>;"> <br />
   <br />
   <p>
-    <label for="mref_widget_<?= $number; ?>_title">
+    <label for="mref_widget_<?php echo $number; ?>_title">
     <?php _e('Title', $this -> plugin_name); ?>
     :
-    <input id="mref_widget_<?= $number; ?>_title" type="text" class="widefat" name="mref-widget[<?= $number; ?>][title]" value="<?= $title; ?>" />
+    <input id="mref_widget_<?php echo $number; ?>_title" type="text" class="widefat" name="mref-widget[<?php echo $number; ?>][title]" value="<?php echo $title; ?>" />
     </label>
   </p>
   <p>
-    <label for="mref_widget_<?= $number; ?>_recent">
+    <label for="mref_widget_<?php echo $number; ?>_recent">
     <?php _e('Display', $this -> plugin_name); ?>
     :
-    <select onchange="change_display(this.value,'<?= $number; ?>');" class="widefat" id="mref_widget_<?= $number; ?>_recent" name="mref-widget[<?= $number; ?>][recent]">
+    <select onchange="change_display(this.value,'<?php echo $number; ?>');" class="widefat" id="mref_widget_<?php echo $number; ?>_recent" name="mref-widget[<?php echo $number; ?>][recent]">
       <option value="">-
       <?php _e('Select', $this -> plugin_name); ?>
       -</option>
       <optgroup label="<?php _e('Posts', $this -> plugin_name); ?>">
-      <option <?= (!empty($recent) && $recent == "posts-all") ? 'selected="selected"' : ''; ?> value="posts-all">
+      <option <?php echo (!empty($recent) && $recent == "posts-all") ? 'selected="selected"' : ''; ?> value="posts-all">
       <?php _e('Posts', $this -> plugin_name); ?>
       ::
       <?php _e('All Categories', $this -> plugin_name); ?>
@@ -498,49 +497,49 @@ class mrefWidgets extends mrefWidgetsPlugin {
       <?php $categories = get_categories(array('number' => false, 'order' => "ASC", 'orderby' => "name")); ?>
       <?php if (!empty($categories)) : ?>
       <?php foreach ($categories as $category) : ?>
-      <option <?= (!empty($recent) && $recent == "posts-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="posts-<?= $category -> cat_ID; ?>">
+      <option <?php echo (!empty($recent) && $recent == "posts-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="posts-<?php echo $category -> cat_ID; ?>">
       <?php _e('Posts', $this -> plugin_name); ?>
       ::
-      <?= $category -> cat_name; ?>
+      <?php echo $category -> cat_name; ?>
       </option>
       <?php endforeach; ?>
       <?php endif; ?>
       </optgroup>
       <optgroup label="<?php _e('Pages', $this -> plugin_name); ?>">
-      <option <?= (!empty($recent) && $recent == "pages-all") ? 'selected="selected"' : ''; ?> value="pages-all">
+      <option <?php echo (!empty($recent) && $recent == "pages-all") ? 'selected="selected"' : ''; ?> value="pages-all">
       <?php _e('All Pages', $this -> plugin_name); ?>
       </option>
       <?php if ($pages = get_pages(array('child_of' => 0))) : ?>
       <?php foreach ($pages as $page) : ?>
-      <option <?= (!empty($recent) && $recent == "pages-" . $page -> ID) ? 'selected="selected"' : ''; ?> value="pages-<?= $page -> ID; ?>">
+      <option <?php echo (!empty($recent) && $recent == "pages-" . $page -> ID) ? 'selected="selected"' : ''; ?> value="pages-<?php echo $page -> ID; ?>">
       <?php _e('Children of', $this -> plugin_name); ?>
       :
-      <?= $page -> post_title; ?>
+      <?php echo $page -> post_title; ?>
       (
-      <?= count(get_pages(array('child_of' => $page -> ID))); ?>
+      <?php echo count(get_pages(array('child_of' => $page -> ID))); ?>
       )</option>
       <?php endforeach; ?>
       <?php endif; ?>
       </optgroup>
       <optgroup label="<?php _e('Categories', $this -> plugin_name); ?>">
-      <option <?= (!empty($recent) && $recent == "categories-all") ? 'selected="selected"' : ''; ?> value="categories-all">
+      <option <?php echo (!empty($recent) && $recent == "categories-all") ? 'selected="selected"' : ''; ?> value="categories-all">
       <?php _e('All Categories', $this -> plugin_name); ?>
       </option>
       <?php $categories = get_categories(array('number' => false, 'hide_empty' => false, 'child_of' => 0, 'order' => "ASC", 'orderby' => "name")); ?>
       <?php if (!empty($categories)) : ?>
       <?php foreach ($categories as $category) : ?>
-      <option <?= (!empty($recent) && $recent == "categories-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="categories-<?= $category -> cat_ID; ?>">
+      <option <?php echo (!empty($recent) && $recent == "categories-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="categories-<?php echo $category -> cat_ID; ?>">
       <?php _e('Children of', $this -> plugin_name); ?>
       :
-      <?= $category -> cat_name; ?>
+      <?php echo $category -> cat_name; ?>
       (
-      <?= count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false))); ?>
+      <?php echo count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false))); ?>
       )</option>
       <?php endforeach; ?>
       <?php endif; ?>
       </optgroup>
       <optgroup label="<?php _e('Links', $this -> plugin_name); ?>">
-      <option <?= (!empty($recent) && $recent == "links-all") ? 'selected="selected"' : ''; ?> value="links-all">
+      <option <?php echo (!empty($recent) && $recent == "links-all") ? 'selected="selected"' : ''; ?> value="links-all">
       <?php _e('Links', $this -> plugin_name); ?>
       ::
       <?php _e('All Categories', $this -> plugin_name); ?>
@@ -548,61 +547,61 @@ class mrefWidgets extends mrefWidgetsPlugin {
       <?php $categories = get_categories(array('type' => 'link', 'number' => false, 'order' => "ASC", 'orderby' => "name")); ?>
       <?php if (!empty($categories)) : ?>
       <?php foreach ($categories as $category) : ?>
-      <option <?= (!empty($recent) && $recent == "links-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="links-<?= $category -> cat_ID; ?>">
+      <option <?php echo (!empty($recent) && $recent == "links-" . $category -> cat_ID) ? 'selected="selected"' : ''; ?> value="links-<?php echo $category -> cat_ID; ?>">
       <?php _e('Links', $this -> plugin_name); ?>
       ::
-      <?= $category -> cat_name; ?>
+      <?php echo $category -> cat_name; ?>
       </option>
       <?php endforeach; ?>
       <?php endif; ?>
       </optgroup>
       <optgroup label="<?php _e('Comments', $this -> plugin_name); ?>">
-      <option <?= (!empty($recent) && $recent == "comments") ? 'selected="selected"' : ''; ?> value="comments">
+      <option <?php echo (!empty($recent) && $recent == "comments") ? 'selected="selected"' : ''; ?> value="comments">
       <?php _e('All Comments', $this -> plugin_name); ?>
       </option>
       </optgroup>
     </select>
     </label>
   </p>
-  <div id="levels_div<?= $number; ?>" style="display:<?= (!empty($recent) && (ereg("categories", $recent) || ereg("pages", $recent))) ? 'block' : 'none'; ?>;">
+  <div id="levels_div<?php echo $number; ?>" style="display:<?php echo (!empty($recent) && (ereg("categories", $recent) || ereg("pages", $recent))) ? 'block' : 'none'; ?>;">
     <p>
       <?php _e('Children Levels', $this -> plugin_name); ?>
-      <input type="text" name="mref-widget[<?= $number; ?>][levels]" value="<?= $levels; ?>" style="width:25px;" />
+      <input type="text" name="mref-widget[<?php echo $number; ?>][levels]" value="<?php echo $levels; ?>" style="width:25px;" />
     </p>
   </div>
-  <div id="pages_div<?= $number; ?>" style="display:<?= (!empty($recent) && (ereg("pages", $recent) || ereg("categories", $recent))) ? 'block' : 'none'; ?>;">
+  <div id="pages_div<?php echo $number; ?>" style="display:<?php echo (!empty($recent) && (ereg("pages", $recent) || ereg("categories", $recent))) ? 'block' : 'none'; ?>;">
     <p>
       <?php _e('Show Parent', $this -> plugin_name); ?>
       :
       <label>
-      <input <?= (!empty($pagesparent) && $pagesparent == "Y") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][pagesparent]" value="Y" />
+      <input <?php echo (!empty($pagesparent) && $pagesparent == "Y") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][pagesparent]" value="Y" />
       <?php _e('Yes', $this -> plugin_name); ?>
       </label>
       <label>
-      <input <?= (!empty($pagesparent) && $pagesparent == "N") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][pagesparent]" value="N" />
+      <input <?php echo (!empty($pagesparent) && $pagesparent == "N") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][pagesparent]" value="N" />
       <?php _e('No', $this -> plugin_name); ?>
       </label>
     </p>
   </div>
-  <div id="hideempty_div<?= $number; ?>" style="display:<?= (!empty($recent) && ereg("categories", $recent)) ? 'block' : 'none'; ?>;">
+  <div id="hideempty_div<?php echo $number; ?>" style="display:<?php echo (!empty($recent) && ereg("categories", $recent)) ? 'block' : 'none'; ?>;">
     <p>
       <?php _e('Hide Empty Categories', $this -> plugin_name); ?>
       :
       <label>
-      <input <?= (empty($hide_empty) || $hide_empty == "Y") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][hide_empty]" value="Y" id="mref_widget_<?= $number; ?>_hideemptyY" />
+      <input <?php echo (empty($hide_empty) || $hide_empty == "Y") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][hide_empty]" value="Y" id="mref_widget_<?php echo $number; ?>_hideemptyY" />
       <?php _e('Yes', $this -> plugin_name); ?>
       </label>
       <label>
-      <input <?= ($hide_empty == "N") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][hide_empty]" value="N" id="mref_widget_<?= $number; ?>_hideemptyN" />
+      <input <?php echo ($hide_empty == "N") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][hide_empty]" value="N" id="mref_widget_<?php echo $number; ?>_hideemptyN" />
       <?php _e('No', $this -> plugin_name); ?>
       </label>
     </p>
   </div>
   <p>
-    <label for="mref_widget_<?= $number; ?>_numberitems">
+    <label for="mref_widget_<?php echo $number; ?>_numberitems">
     <?php _e('Number of Items', $this -> plugin_name); ?>
     :
-    <input style="width:45px; text-align:center;" id="mref_widget_<?= $number; ?>_numberitems" type="text" name="mref-widget[<?= $number; ?>][numberitems]" size="3" value="<?= $numberitems; ?>" />
+    <input style="width:45px; text-align:center;" id="mref_widget_<?php echo $number; ?>_numberitems" type="text" name="mref-widget[<?php echo $number; ?>][numberitems]" size="3" value="<?php echo $numberitems; ?>" />
     <?php _e('items', $this -> plugin_name); ?>
     <br/>
     <small>
@@ -612,8 +611,8 @@ class mrefWidgets extends mrefWidgetsPlugin {
     </label>
   </p>
   <p>
-    <label for="mref_widget_<?= $number; ?>_rotateposts" id="mref_widget_<?= $number; ?>_rotatepostslabel" style="color:#999999;">
-    <input type="checkbox" <?= (!empty($rotateposts) && $rotateposts == "Y") ? 'checked="checked"' : 'disabled="disabled"'; ?> name="mref-widget[<?= $number; ?>][rotateposts]" value="Y" id="mref_widget_<?= $number; ?>_rotateposts" />
+    <label for="mref_widget_<?php echo $number; ?>_rotateposts" id="mref_widget_<?php echo $number; ?>_rotatepostslabel" style="color:#999999;">
+    <input type="checkbox" <?php echo (!empty($rotateposts) && $rotateposts == "Y") ? 'checked="checked"' : 'disabled="disabled"'; ?> name="mref-widget[<?php echo $number; ?>][rotateposts]" value="Y" id="mref_widget_<?php echo $number; ?>_rotateposts" />
     <?php _e('Rotate Number of Posts Specified', $this -> plugin_name); ?>
     <br/>
     <small>
@@ -621,29 +620,29 @@ class mrefWidgets extends mrefWidgetsPlugin {
     </small> </label>
   </p>
   <p>
-    <label for="mref_widget_<?= $number; ?>_orderby_name">
+    <label for="mref_widget_<?php echo $number; ?>_orderby_name">
     <?php _e('Sort By', $this -> plugin_name); ?>
     :
     <label>
-    <input id="mref_widget_<?= $number; ?>_orderby_name" <?= ((empty($orderby)) || (!empty($orderby) && $orderby == "name")) ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][orderby]" value="name" />
+    <input id="mref_widget_<?php echo $number; ?>_orderby_name" <?php echo ((empty($orderby)) || (!empty($orderby) && $orderby == "name")) ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][orderby]" value="name" />
     <?php _e('Name', $this -> plugin_name); ?>
     </label>
     <label>
-    <input id="mref_widget_<?= $number; ?>_orderby_date" <?= (!empty($orderby) && $orderby == "date") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][orderby]" value="date" />
+    <input id="mref_widget_<?php echo $number; ?>_orderby_date" <?php echo (!empty($orderby) && $orderby == "date") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][orderby]" value="date" />
     <?php _e('Date', $this -> plugin_name); ?>
     </label>
     </label>
   </p>
   <p>
-    <label for="mref_widget_<?= $number; ?>_order_asc">
+    <label for="mref_widget_<?php echo $number; ?>_order_asc">
     <?php _e('Sort Direction', $this -> plugin_name); ?>
     :
     <label>
-    <input id="mref_widget_<?= $number; ?>_order_asc" <?= ((empty($order)) || (!empty($order) && $order == "ASC")) ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][order]" value="ASC" />
+    <input id="mref_widget_<?php echo $number; ?>_order_asc" <?php echo ((empty($order)) || (!empty($order) && $order == "ASC")) ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][order]" value="ASC" />
     <?php _e('Ascending', $this -> plugin_name); ?>
     </label>
     <label>
-    <input id="mref_widget_<?= $number; ?>_order_desc" <?= (!empty($order) && $order == "DESC") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?= $number; ?>][order]" value="DESC" />
+    <input id="mref_widget_<?php echo $number; ?>_order_desc" <?php echo (!empty($order) && $order == "DESC") ? 'checked="checked"' : ''; ?> type="radio" name="mref-widget[<?php echo $number; ?>][order]" value="DESC" />
     <?php _e('Descending', $this -> plugin_name); ?>
     </label>
     </label>
@@ -652,63 +651,63 @@ class mrefWidgets extends mrefWidgetsPlugin {
     <?php _e('Options', $this -> plugin_name); ?>
     :<br/>
     <label>
-    <input <?= (!empty($linkdescriptions) && $linkdescriptions == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?= $number; ?>][linkdescriptions]" value="Y" />
+    <input <?php echo (!empty($linkdescriptions) && $linkdescriptions == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?php echo $number; ?>][linkdescriptions]" value="Y" />
     <?php _e('Show link descriptions', $this -> plugin_name); ?>
     </label>
     <br/>
     <label>
-    <input <?= (!empty($catrsslinks) && $catrsslinks == "Y") ? 'checked="checked"' : ''; ?> onclick="titlelinktoggle('<?= $number; ?>');" type="checkbox" id="mref_widget_<?= $number; ?>_catrsslinks" name="mref-widget[<?= $number; ?>][catrsslinks]" value="Y" />
+    <input <?php echo (!empty($catrsslinks) && $catrsslinks == "Y") ? 'checked="checked"' : ''; ?> onclick="titlelinktoggle('<?php echo $number; ?>');" type="checkbox" id="mref_widget_<?php echo $number; ?>_catrsslinks" name="mref-widget[<?php echo $number; ?>][catrsslinks]" value="Y" />
     <?php _e('Show RSS links for categories', $this -> plugin_name); ?>
     </label>
     <br/>
     <label>
-    <input onclick="showitemdates(<?= $number; ?>);" <?= (!empty($itemdates) && $itemdates == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?= $number; ?>][itemdates]" value="Y" id="mref_widget_<?= $number; ?>_itemdates" />
+    <input onclick="showitemdates(<?php echo $number; ?>);" <?php echo (!empty($itemdates) && $itemdates == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?php echo $number; ?>][itemdates]" value="Y" id="mref_widget_<?php echo $number; ?>_itemdates" />
     <?php _e('Show date for each item', $this -> plugin_name); ?>
     </label>
     <br/>
     <label>
-    <input onclick="titlelinktoggle('<?= $number; ?>');" <?= (!empty($titlelink) && $titlelink == "Y") ? 'checked="checked"' : ''; ?> id="mref_widget_<?= $number; ?>_titlelink" type="checkbox" name="mref-widget[<?= $number; ?>][titlelink]" value="Y" />
+    <input onclick="titlelinktoggle('<?php echo $number; ?>');" <?php echo (!empty($titlelink) && $titlelink == "Y") ? 'checked="checked"' : ''; ?> id="mref_widget_<?php echo $number; ?>_titlelink" type="checkbox" name="mref-widget[<?php echo $number; ?>][titlelink]" value="Y" />
     <?php _e('Apply link to title', $this -> plugin_name); ?>
     </label>
-  <div id="mref_widget_<?= $number; ?>_titlelinkdiv" style="display:<?= (!empty($titlelink) && $titlelink == "Y") ? 'block' : 'none'; ?>;">
-    <label for="mref_widget_<?= $number; ?>_titlelinkurl">
+  <div id="mref_widget_<?php echo $number; ?>_titlelinkdiv" style="display:<?php echo (!empty($titlelink) && $titlelink == "Y") ? 'block' : 'none'; ?>;">
+    <label for="mref_widget_<?php echo $number; ?>_titlelinkurl">
     <?php _e('Link URL', $this -> plugin_name); ?>
     :
-    <input type="text" class="widefat" name="mref-widget[<?= $number; ?>][titlelinkurl]" value="<?= $titlelinkurl; ?>" id="mref_widget_<?= $number; ?>_titlelinkurl" />
+    <input type="text" class="widefat" name="mref-widget[<?php echo $number; ?>][titlelinkurl]" value="<?php echo $titlelinkurl; ?>" id="mref_widget_<?php echo $number; ?>_titlelinkurl" />
     </label>
   </div>
   </p>
-  <p id="mref_widget_<?= $number; ?>_itemdatesY" style="display:<?= (!empty($itemdates) && $itemdates == "Y") ? 'block' : 'none'; ?>;">
-    <label for="mref_widget_<?= $number; ?>_dateformat">
+  <p id="mref_widget_<?php echo $number; ?>_itemdatesY" style="display:<?php echo (!empty($itemdates) && $itemdates == "Y") ? 'block' : 'none'; ?>;">
+    <label for="mref_widget_<?php echo $number; ?>_dateformat">
     <?php $dateformats = $this -> get_option('dateformats'); ?>
     <?php _e('Date Format', $this -> plugin_name); ?>
     :
-    <select id="mref_widget_<?= $number; ?>_dateformat" name="mref-widget[<?= $number; ?>][dateformat]" class="widefat">
+    <select id="mref_widget_<?php echo $number; ?>_dateformat" name="mref-widget[<?php echo $number; ?>][dateformat]" class="widefat">
       <option value="">-
       <?php _e('Select Date Format', $this -> plugin_name); ?>
       -</option>
       <?php foreach ($dateformats as $format) : ?>
-      <option value="<?= $format; ?>" <?= (!empty($dateformat) && $dateformat == $format) ? 'selected="selected"' : ''; ?>>
-      <?= date($format, time()); ?>
+      <option value="<?php echo $format; ?>" <?php echo (!empty($dateformat) && $dateformat == $format) ? 'selected="selected"' : ''; ?>>
+      <?php echo date($format, time()); ?>
       </option>
       <?php endforeach; ?>
     </select>
     </label>
   </p>
   <p>
-    <label for="mref_widget_<?= $number; ?>_max_length">
+    <label for="mref_widget_<?php echo $number; ?>_max_length">
     <?php _e('Max Length', $this -> plugin_name); ?>
     :
-    <input style="width:45px; text-align:center;" type="text" id="mref_widget_<?= $number; ?>_max_length" size="5" name="mref-widget[<?= $number; ?>][max_length]" value="<?= $max_length; ?>" />
+    <input style="width:45px; text-align:center;" type="text" id="mref_widget_<?php echo $number; ?>_max_length" size="5" name="mref-widget[<?php echo $number; ?>][max_length]" value="<?php echo $max_length; ?>" />
     <?php _e('characters', $this -> plugin_name); ?>
     <br/>
     <small>leave empty to show full titles</small> </label>
   </p>
   <p>
-    <label for="mref_widget_<?= $number; ?>_exclude">
+    <label for="mref_widget_<?php echo $number; ?>_exclude">
     <?php _e('Exclude', $this -> plugin_name); ?>
     :
-    <input class="widefat" id="mref_widget_<?= $number; ?>_exclude" type="text" name="mref-widget[<?= $number; ?>][exclude]" value="<?= $exclude; ?>" />
+    <input class="widefat" id="mref_widget_<?php echo $number; ?>_exclude" type="text" name="mref-widget[<?php echo $number; ?>][exclude]" value="<?php echo $exclude; ?>" />
     <br/>
     <small>Enter comma separated IDs</small> </label>
   </p>
@@ -721,7 +720,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 			?>
   <script type="text/javascript">
 
-			change_display('<?= $recent; ?>','<?= $number; ?>');
+			change_display('<?php echo $recent; ?>','<?php echo $number; ?>');
 
 		</script>
   <?php
@@ -731,7 +730,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 <div class="locationpanel" style="display:<?php if ($widget_values['call'] == "location") { echo "block"; } else { echo "none"; } ?>;"> <br />
   <div class="cat">
     <p><?php echo $allcategories; ?>
-      <input type="checkbox" <?= (!empty($allcategories) && $allcategories == "Y") ? 'checked="checked"' : ''; ?> value="Y" name="mref-widget[<?= $number; ?>][allcategories]" id="mref_widget_<?= $number; ?>_allcategories">
+      <input type="checkbox" <?php echo (!empty($allcategories) && $allcategories == "Y") ? 'checked="checked"' : ''; ?> value="Y" name="mref-widget[<?php echo $number; ?>][allcategories]" id="mref_widget_<?php echo $number; ?>_allcategories">
       <?php _e('All Categories | Only those checked Categories.', $this -> plugin_name); ?>
     </p>
     <hr />
@@ -762,10 +761,10 @@ class mrefWidgets extends mrefWidgetsPlugin {
 
 	  <?php endforeach; ?>
 
-	  value="<?= $category -> cat_ID; ?>" name="mref-widget[<?= $number; ?>][postcategory][]" id="mref_widget_<?= $number; ?>_category-<?= $category -> cat_ID; ?>">
-        <?= $category -> cat_name; ?>
+	  value="<?php echo $category -> cat_ID; ?>" name="mref-widget[<?php echo $number; ?>][postcategory][]" id="mref_widget_<?php echo $number; ?>_category-<?php echo $category -> cat_ID; ?>">
+        <?php echo $category -> cat_name; ?>
         (
-        <?= count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false))); ?>
+        <?php echo count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false))); ?>
         )</li>
       <?php endforeach; ?>
       <?php endif; ?>
