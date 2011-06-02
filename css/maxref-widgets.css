@@ -1,0 +1,226 @@
+/* WP ADMIN */
+
+
+
+.wfmaxrefnotice {
+
+	/*border-width: 1px;
+
+	border-style: solid;
+
+	padding: 0 0.6em;
+
+	margin: 5px 15px 2px;
+
+	-moz-border-radius: 3px;
+
+	-khtml-border-radius: 3px;
+
+	-webkit-border-radius: 3px;
+
+	border-radius: 3px;
+
+	background-color: #FFFBCC;
+
+	border-color: #CC0000;
+*/
+}
+
+
+
+.wfmaxrefnotice p {
+
+	margin: 5px 0 !important;
+
+	line-height: 1;
+
+	padding: 2px;
+
+}
+
+
+
+.wrap .wfmaxrefnotice {
+
+	margin: 5px 0 10px 0 !important;
+
+}
+
+
+
+/* WP FRONT */
+
+
+
+p.yad {
+
+	color: rgb(119, 119, 119);
+
+	padding: 13px 0 0 10px;
+
+	font-style: italic;
+
+	text-align: center;
+
+	display: block;
+
+}
+
+
+
+a.rsswidget {
+
+	text-decoration: none;
+
+}
+
+
+
+a.rsswidget img {
+
+	border: none !important;
+
+}
+
+.display{
+
+	background:url(images/display.gif) no-repeat;
+
+	padding: 9px 22px;
+
+    width: 102px;
+
+	cursor:pointer;
+
+	color:#000000;
+
+	/*text-indent: 99px;*/
+
+	-moz-border-radius:none !important;
+
+	border:0px !important;
+
+}
+
+
+
+.display.active{
+
+	background:url(images/display_off.gif) no-repeat;
+
+	padding: 9px 22px;
+
+    width: 102px;
+
+	cursor:pointer;
+
+	/*text-indent: 99px;*/
+
+	-moz-border-radius:none !important;
+
+	border:0px !important;
+
+}
+
+.location{
+
+	background:url(images/location.gif) no-repeat;
+
+	padding: 9px 22px;
+
+    width: 102px;
+
+	cursor:pointer;
+
+	color:#000000;
+
+	/*text-indent: 99px;*/
+
+	-moz-border-radius:none !important;
+
+	border:0px !important;
+	@margin-left:-45px;
+
+}
+
+
+
+.location.active{
+
+	background:url(images/location_off.gif) no-repeat;
+
+	padding: 9px 22px;
+
+    width: 102px;
+
+	cursor:pointer;
+
+	/*text-indent: 99px;*/
+
+	-moz-border-radius:none !important;
+
+	border:0px !important;
+
+}
+
+#toppanel{
+
+	
+
+	margin:0px 0px -2px 0px;
+
+}
+
+.displaypanel{
+
+ 	border-top: 1px solid #000000;
+
+    margin-top: -5px;
+
+    position: relative;
+
+    z-index: 9999;
+
+}
+
+.locationpanel{
+
+ 	border-top: 1px solid #000000;
+
+    margin-top: -5px;
+
+    position: relative;
+
+    z-index: 9999;
+
+}
+
+.more
+{
+text-align:center;
+color:#CCCCCC;
+border-bottom:solid 1px #cccccc;
+}
+.btmimg
+{
+background:url(images/maxreflogo.png) no-repeat;
+width:120px;
+height:171px;
+margin-left:120px;
+padding:10px;
+cursor:pointer;
+
+}
+
+/*select,ul{ height: 100px; overflow: auto; width: 350px; border: 1px solid #000; padding: 0 0 0 10px; }
+#cate ul{ list-style-type: none; margin: 0; padding: 0; overflow-x: hidden;  padding: 0 0 0 10px;
+    width: 350px; }
+#cate ul li { margin: 0; padding: 0; }
+label { display: block; color: WindowText; background-color: Window; margin: 0; padding: 0; width: 100%; }
+label:hover { background-color: Highlight; color: HighlightText; }*/
+#cate
+{
+border:solid 1px red;list-style-type: none; overflow-x: hidden;  padding: 0 0 0 10px;height: 100px; overflow: auto; width: 350px; border: 1px solid #000;
+
+}
+

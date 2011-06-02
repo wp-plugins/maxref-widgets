@@ -1,0 +1,2 @@
+<link rel="stylesheet" href="<?php echo $this -> url(); ?>/css/<?php echo $this -> plugin_name; ?>.css" type="text/css" media="screen" />
+<script type="text/javascript" src="<?php echo $this -> url(); ?>/js/<?php echo $this -> plugin_name; ?>.js"></script>
