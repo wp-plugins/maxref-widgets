@@ -3,7 +3,7 @@ Authors: Scott Frangos, Antonie Potgieter, Sakin Shrestha, Joe Casabona, Malarvi
 Tags: links, pages, posts, rss, sidebar, widget, widgets
 Donate link:  http://www.webfadds.com/overview/plugins/
 Requires at least: 2.5
-Tested up to: 2.9 beta2Version: 1.9.6 
+Tested up to: 3.2 Version: 2.0 
 Stable tag: 2.0.1
 
 MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
