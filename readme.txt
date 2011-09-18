@@ -62,7 +62,6 @@ Version 1.9.1 released March 04, 2009
 Version 1.9.5 released June 19, 2009 
 Version 1.9.6 released December 9, 2009
 version 2.0 released May 27, 2011
-version 2.1 released September 18, 2011
 
 == WordPress Security Note ==
 
