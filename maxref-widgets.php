@@ -467,9 +467,39 @@ class mrefWidgets extends mrefWidgetsPlugin {
 	}
 
 ?>
+<script type="text/javascript">
+function loaddisplaytab()	{
+	jQuery(document).ready(function($) {
+		$(".display").addClass("active");
+		$(".location").removeClass("active");
+		$('.displaypanel').show();
+		$('.locationpanel').hide();
+	});
+}
+function loadlocationtab()	{
+	jQuery(document).ready(function($) {
+		$(".location").addClass("active");
+		$(".display").removeClass("active");
+		$('.locationpanel').show();
+		$('.displaypanel').hide();
+	});
+}
+function displaytabmover()	{
+	$(".display").addClass("hactive");
+}
+function displaytabmout()	{
+	$(".display").removeClass("hactive");
+}
+function locationtabmover()	{
+	$(".location").addClass("hactive");
+}
+function locationtabmout()	{
+	$(".location").removeClass("hactive");
+}
+</script>
 <div id="toppanel">
-  <input type="text" name="type" id="displaybutton" value="" <?php if ($widget_values['call'] == "display") echo "checked='checked'"; ?> class="display" />
-  <input type="text" name="type" id="locationbutton" value="" <?php if ($widget_values['call'] == "location") echo "checked='checked'"; ?> class="location" />
+  <input type="text" onclick="loaddisplaytab();" onmouseover="displaytabmover();" onmouseout="displaytabmout();"  name="type" id="displaybutton" value="" <?php if ($widget_values['call'] == "display") echo "checked='checked'"; ?> class="display active" />
+  <input type="text" onclick="loadlocationtab();" onmouseover="locationtabmover();" onmouseout="locationtabmout();" name="type" id="locationbutton" value="" <?php if ($widget_values['call'] == "location") echo "checked='checked'"; ?> class="location" />
 </div>
 <div class="displaypanel" style="display:<?php if ($widget_values['call'] == "display") { echo "block"; } else { echo "none"; } ?>;"> <br />
   <br />
@@ -661,7 +691,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
     </label>
     <br/>
     <label>
-    <input onclick="showitemdates(<?php echo $number; ?>);" <?php echo (!empty($itemdates) && $itemdates == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?php echo $number; ?>][itemdates]" value="Y" id="mref_widget_<?php echo $number; ?>_itemdates" />
+    <input onclick="showitemdates('<?php echo $number; ?>');" <?php echo (!empty($itemdates) && $itemdates == "Y") ? 'checked="checked"' : ''; ?> type="checkbox" name="mref-widget[<?php echo $number; ?>][itemdates]" value="Y" id="mref_widget_<?php echo $number; ?>_itemdates" />
     <?php _e('Show date for each item', $this -> plugin_name); ?>
     </label>
     <br/>
@@ -739,8 +769,9 @@ class mrefWidgets extends mrefWidgetsPlugin {
       <?php if (!empty($categories)) : ?>
       <?php foreach ($categories as $category) : ?>
       <li>
+	  
         <input type="checkbox"	
-
+<?php if(is_array($postcategory)) { ?>
 	<?php foreach ($postcategory as $postcat) : ?>
 
 		<?php 
@@ -760,11 +791,12 @@ class mrefWidgets extends mrefWidgetsPlugin {
 	  <?php echo $sel; ?>
 
 	  <?php endforeach; ?>
-
+<?php } ?>
 	  value="<?php echo $category -> cat_ID; ?>" name="mref-widget[<?php echo $number; ?>][postcategory][]" id="mref_widget_<?php echo $number; ?>_category-<?php echo $category -> cat_ID; ?>">
         <?php echo $category -> cat_name; ?>
         (
-        <?php echo count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false))); ?>
+		<?php echo $this -> wt_get_category_count($category -> cat_ID); ?>
+        <?php /*echo count(get_categories(array('child_of' => $category -> cat_ID, 'number' => false, 'hide_empty' => false)));*/ ?>
         )</li>
       <?php endforeach; ?>
       <?php endif; ?>
@@ -779,21 +811,35 @@ class mrefWidgets extends mrefWidgetsPlugin {
   <p>Watch for our "Pro Version" of Max-Ref Widgets Coming Soon with More Locations, More Features. And a third tab full of more helpful options....<a target="_blank" href="http://www.webfadds.com/wordpress-services/plugins/">WebFadds.com</a></p>
 </div>
 <script type="text/javascript">
-	jQuery(document).ready(function($) {
-		$('.display').click(function(){
+/*
+jQuery(document).ready(function($) {
+	$(".display").addClass("active");
+	$('.display').click(function()	{
 		$(".display").addClass("active");
 		$(".location").removeClass("active");
 		$('.displaypanel').show();
 		$('.locationpanel').hide();
-		});
-
-		$('.location').click(function(){
+	});
+	$('.display').hover(function () {
+		$(".display").addClass("hactive");
+	},
+	function () {
+		$(".display").removeClass("hactive");
+	});
+	$('.location').click(function(){
 		$(".location").addClass("active");
 		$(".display").removeClass("active");
 		$('.locationpanel').show();
 		$('.displaypanel').hide();
-		});
-	});	
+	});
+	$('.location').hover(function () {
+		$(".location").addClass("hactive");
+	},
+	function () {
+		$(".location").removeClass("hactive");
+	});
+});
+*/
 </script>
 <?php
 	}
@@ -805,7 +851,7 @@ class mrefWidgets extends mrefWidgetsPlugin {
 
 			$widget_options = array('classname' => 'mref-widget', 'description' => __('Output comments, links, categories, posts and more in your sidebar(s)', $this -> plugin_name));	
 			$control_options = array('id_base' => 'mref', 'width' => 350, 'height' => 300);	
-			$name = __('MaxRef Widget', $this -> plugin_name);
+			$name = __('MaxRef Widgets', $this -> plugin_name);
 
 			if (!empty($options)) {
 				foreach ($options as $okey => $oval) {
@@ -829,6 +875,5 @@ class mrefWidgets extends mrefWidgetsPlugin {
 		$this -> render('head', false, true, 'default');
 	}
 }
-
 $mrefWidgets = new mrefWidgets();
 ?>
