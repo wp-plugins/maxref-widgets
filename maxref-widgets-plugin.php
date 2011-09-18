@@ -83,6 +83,23 @@ class mrefWidgetsPlugin {
 		return $url;
 	}
 
+	function wt_get_category_count($input = '') {
+		global $wpdb;
+		$totcount = 0;
+		if(is_numeric($input))	{
+			$psql = "SELECT $wpdb->term_taxonomy.count FROM $wpdb->terms, $wpdb->term_taxonomy WHERE $wpdb->terms.term_id=$wpdb->term_taxonomy.term_id AND $wpdb->term_taxonomy.term_id=$input";
+			$psqlcount = $wpdb->get_var($psql);
+			$chsql = "SELECT * FROM $wpdb->term_taxonomy WHERE $wpdb->term_taxonomy.parent=$input";
+			$chres = $wpdb->get_results($chsql, ARRAY_A);
+			$csqlcount = 0;
+			for($i=0;$i<count($chres);$i++)	{
+				$csqlcount += $chres[$i]["count"];
+			}
+			$totcount = $psqlcount+$csqlcount;
+			return $totcount;
+		}
+	}
+
 	function get_pages($args = array()) {
 		global $wpdb, $items, $levels, $usedpages;
 		if (!empty($args)) {
