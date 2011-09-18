@@ -1,22 +1,24 @@
-=== MaxRef-Widget ===
+=== MaxRef-Widgets ===
 Authors: Scott Frangos, Antonie Potgieter, Sakin Shrestha, Joe Casabona, Malarvizhi
 Tags: links, pages, posts, rss, sidebar, widget, widgets
 Donate link:  http://www.webfadds.com/overview/plugins/
 Requires at least: 2.5
-Tested up to: 3.2 Version: 2.0
-Stable tag: 2.0.1
+Tested up to: 2.9 beta2Version: 1.9.6 
+Stable tag: 2.1
 
-MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
+MaxRef Widgets is a Content Marketing plugin that enables you to display multiple sidebar widgets to maximize how your visitors reference your posts, links, categories and comments.
 
 == Description ==
 
-MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars with options to display posts only from a certain category, the links from a particular link category, comments and more. New in version 2.0 is the ability to display widgets only on certain blog categories. Choose how many posts or pages appear, to display an RSS feed for categories, and how to sort the links presented. .Changes: Visit us at http://www.webfadds.com/overview/plugins/ for news and updates
+MaxRef Widgets is a powerful way for Content Marketers to add unlimited widgets on your sidebars with options to display posts only from a certain category, the links from a particular link category, comments and more. New in version 2.1 is the ability to display widgets only on certain blog categories. Choose how many posts or pages appear, to display an RSS feed for categories, and how to sort the links presented.
+
+Changes: Visit us at http://www.webfadds.com/overview/plugins/ for news and updates
 
  == Installation ==
 
 1. Upload the whole plugin folder to your /wp-content/plugins/ folder.
 2. Go to the Plugins page and activate the plugin.
-3. Go to your widgets area, and add a MaxRef Widget (as many as you want)
+3. Go to your widgets area, and add a MaxRef Widgets (as many as you want)
 4. Click on Edit to configure your new widget to display Posts by Category, Pages, Links by Category, or Comments, and then your Sort and other options. Use the new second tab section to show a widget only in certain blog post categories.
 
 == Frequently Asked Questions ==
@@ -24,11 +26,14 @@ MaxRef Widgets is a powerful way to add unlimited widgets on your sidebars with 
 Please see official page to read Q & A, make comments and post new questions: http://www.webfadds.com/wordpress-services/plugins/
 
 == Screenshots ==
-1. New Tab to set MaxRef widgets to display in selected blog categories only
+[Screenshot 1]
+New Tab to set MaxRef Widgets to display in selected blog categories only
 
-2. MaxRef Widget displays page parent and child group on sidebars
+[Screenshot 2]
+MaxRef Widgets displays page parent and child group on sidebars
 
-3. MaxRef Widget child group with title link on sidebars
+[Screenshot 2]
+MaxRef Widgets child group with title link on sidebars
 
 == License ==
 This plugin is freely distributable under the GNU GENERAL PUBLIC LICENSE license (version 2, June 1991), though we recommend you download it only from the Publisher's site (at WebFadds.com), or the official WordPress Plugin Repository. Please read the full license terms at: http://www.gnu.org/licenses/gpl-2.0.html
@@ -57,6 +62,7 @@ Version 1.9.1 released March 04, 2009
 Version 1.9.5 released June 19, 2009 
 Version 1.9.6 released December 9, 2009
 version 2.0 released May 27, 2011
+version 2.1 released September 18, 2011
 
 == WordPress Security Note ==
 
