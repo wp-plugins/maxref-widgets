@@ -3,7 +3,7 @@
 Plugin Name: MaxRef Widgets
 Plugin URI: http://WebFadds.com/wordpress-services/plugins/
 Description: MaxRef Widgets enables you to display multiple sidebar widgets to maximize how your visitors reference to your pages, your posts, links, categories, RSS feeds, and comments.
-Version: 2.0
+Version: 2.1
 Author: Scott Frangos
 Author URI: http://webfadds.com
 License: GPLv2
