@@ -26,14 +26,11 @@ Changes: Visit us at http://www.webfadds.com/overview/plugins/ for news and upda
 Please see official page to read Q & A, make comments and post new questions: http://www.webfadds.com/wordpress-services/plugins/
 
 == Screenshots ==
-[Screenshot 1]
-New Tab to set MaxRef Widgets to display in selected blog categories only
+1. New Tab to set MaxRef Widgets to display in selected blog categories only
 
-[Screenshot 2]
-MaxRef Widgets displays page parent and child group on sidebars
+2. MaxRef Widgets displays page parent and child group on sidebars
 
-[Screenshot 2]
-MaxRef Widgets child group with title link on sidebars
+3. MaxRef Widgets child group with title link on sidebars
 
 == License ==
 This plugin is freely distributable under the GNU GENERAL PUBLIC LICENSE license (version 2, June 1991), though we recommend you download it only from the Publisher's site (at WebFadds.com), or the official WordPress Plugin Repository. Please read the full license terms at: http://www.gnu.org/licenses/gpl-2.0.html
